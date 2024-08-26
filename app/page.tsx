@@ -1,5 +1,7 @@
 import NavBar from "@/components/nav/NavBar";
 
+//export const runtime = "edge";
+
 export default function Home() {
   // TODO if authenticated redirect to dashboard
   return (

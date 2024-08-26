@@ -1,11 +1,9 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from "@/auth";
 import SignInButtons from "./SignInButtons";
 import SignOutButton from "./SignOutButton";
 
-
 const NavBar = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   return <>{session?.user ? <SignOutButton /> : <SignInButtons />}</>;
 };

@@ -19,6 +19,7 @@ export default function Login() {
 
   const searchParams = useSearchParams();
   const loginError = searchParams.get("error");
+  const callbackUrl = searchParams.get("callbackUrl");
 
   return (
     <div className="w-full lg:grid lg:grid-cols-2 h-screen">
@@ -81,7 +82,7 @@ export default function Login() {
                   signIn("credentials", {
                     email,
                     password,
-                    callbackUrl: "/dashboard",
+                    callbackUrl: callbackUrl ?? "/dashboard",
                   });
                 }
               }}
@@ -156,7 +157,9 @@ export default function Login() {
             <Button
               variant="outline"
               className="w-full"
-              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+              onClick={() =>
+                signIn("google", { callbackUrl: callbackUrl ?? "/dashboard" })
+              }
             >
               <Image
                 src="/google.svg"

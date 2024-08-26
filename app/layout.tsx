@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import Provider from "./_provider";
 
+//export const runtime = "edge";
 export const metadata: Metadata = {
   title: {
     template: "%s | Zakkini",
@@ -23,11 +22,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider session={session}>
+        <Provider>
           <main>{children}</main>
           <Toaster />
         </Provider>
