@@ -18,5 +18,7 @@ jobs:
           git config --global user.name DatteroMaster
           git config --global user.email dev@dattero.org
           
-          git remote add secondary https://{{ secrets.MASTER_REPO_PAT }}@github.com/DatteroMaster/zakkini-nextjs.git
+          git remote add secondary https://github.com/DatteroMaster/zakkini-nextjs.git
           git push -u secondary main --force
+        env:
+          GH_TOKEN: ${{ secrets.MASTER_REPO_PAT }}
