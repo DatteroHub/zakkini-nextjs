@@ -11,12 +11,13 @@ jobs:
 
     steps:
       - name: Checkout source repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         
       - name: Set up Git
         run: |
           git config --global user.name 'DatteroMaster'
           git config --global user.email 'dev@dattero.org'
+          echo "machine github.com login ${{ secrets.MASTER_REPO_PAT }}" > ~/.netrc
 
       - name: Add target repository
         run: |
