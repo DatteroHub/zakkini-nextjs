@@ -11,14 +11,17 @@ jobs:
 
     steps:
       - name: Checkout source repository
-        uses: actions/checkout@v3
-
-      - name: Sync with master repository
+        uses: actions/checkout@v2
+        
+      - name: Set up Git
         run: |
-          git config --global user.name DatteroMaster
-          git config --global user.email dev@dattero.org
-          
-          git remote add secondary https://github.com/DatteroMaster/zakkini-nextjs.git
-          git push -u secondary main --force
-        env:
-          GH_TOKEN: ${{ secrets.MASTER_REPO_PAT }}
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Add target repository
+        run: |
+          git remote add target https://{{ secrets.MASTER_REPO_PAT }}@github.com/DatteroMaster/zakkini-nextjs.git
+        
+      - name: Push changes to target repository
+        run: |
+          git push -u target main --force
