@@ -1,0 +1,24 @@
+name: Sync Repository
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v2
+
+      - name: Sync with master repository
+        run: |
+          git config --global user.name DatteroMaster
+          git config --global user.email dev@dattero.org
+          
+          git remote add secondary https://$MASTER_REPO_PAT@github.com/DatteroMaster/zakkini-nextjs.git
+          git push -u secondary main --force
+        env:
+          MASTER_REPO_PAT: ${{ secrets.MASTER_REPO_PAT }}
