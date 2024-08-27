@@ -20,7 +20,7 @@ jobs:
 
       - name: Add target repository
         run: |
-          git remote add target https://{{ secrets.MASTER_REPO_PAT }}@github.com/DatteroMaster/zakkini-nextjs.git
+          git remote add target https://x-access-token:${{ secrets.MASTER_REPO_PAT }}@github.com/DatteroMaster/zakkini-nextjs.git
         
       - name: Push changes to target repository
         run: |
