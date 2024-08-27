@@ -1,4 +1,4 @@
-name: Sync Repository
+name: Sync Repo Master
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
           git config --global user.name DatteroMaster
           git config --global user.email dev@dattero.org
           
-          git remote add secondary https://$MASTER_REPO_PAT@github.com/DatteroMaster/zakkini-nextjs.git
-          git push -u secondary main --force
+          git remote add origin https://$MASTER_REPO_PAT@github.com/DatteroMaster/zakkini-nextjs.git
+          git push -u origin main --force
         env:
           MASTER_REPO_PAT: ${{ secrets.MASTER_REPO_PAT }}
