@@ -13,16 +13,18 @@ jobs:
       - name: Checkout source repository
         uses: actions/checkout@v4
         
-      - name: Set up Git
+      - name: Configure Git
         run: |
-          git config --global user.name 'DatteroMaster'
-          git config --global user.email 'dev@dattero.org'
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Push to destination repository
+      - name: Clone destination repository
         run: |
-          git remote add target https://${{ env.DEST_NAME }}:${{ secrets.MASTER_REPO_PAT }}@github.com/${{ env.DEST_NAME }}/${{ env.REPO_NAME }}.git
-          git push -u target main --force
+          git clone --bare ${{ github.repository_url }} repo_to_sync
+          cd repo_to_sync
+          git push --mirror $DESTINATION_REPO
         env:
-          GITHUB_TOKEN: ${{ secrets.MASTER_REPO_PAT }}
-          DEST_NAME: DatteroMaster
-          REPO_NAME: zakkini-nextjs
+          DESTINATION_REPO: https://${{ secrets.MASTER_REPO_PAT }}@github.com/DatteroMaster/zakkini-nextjs.git
+
+      - name: Clean up
+        run: rm -rf repo_to_sync
