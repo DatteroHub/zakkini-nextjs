@@ -20,12 +20,12 @@ jobs:
 
       - name: Clone destination repository
         run: |
-          git clone --bare ${{ ORIGINAL_REPO_URL }} repo_to_sync
+          git clone --bare $ORIGINAL_REPO_URL repo_to_sync
           cd repo_to_sync
           git push --mirror $DESTINATION_REPO
         env:
           DESTINATION_REPO: https://${{ secrets.MASTER_REPO_PAT }}@github.com/DatteroMaster/zakkini-nextjs.git
-          ORIGINAL_REPO_URL: ${{ github.repositoryUrl }}
+          ORIGINAL_REPO_URL: ${{ github.event.repository.url }}
 
       - name: Clean up
         run: rm -rf repo_to_sync
