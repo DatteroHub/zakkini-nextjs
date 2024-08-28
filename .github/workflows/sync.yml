@@ -25,21 +25,7 @@ jobs:
         run: |
           git clone --bare ${{ env.ORIGINAL_REPO_URL }}.git repo_to_sync
           cd repo_to_sync
-          git clone ${{ env.DESTINATION_REPO }} destination_repo
-          cd destination_repo
-          
-          # Rimuovi la cartella .github (che contiene i workflow) se esiste
-          if [ -d ".github" ]; then
-            git rm -r --cached .github
-            git commit -m "Remove .github directory"
-          fi
-
-          # Aggiungi e committa i cambiamenti
-          git add .
-          git commit -m "Sync repository excluding workflows"
-
-          # Esegui il push alla repository di destinazione
-          git push origin main
+          git push --mirror ${{ env.DESTINATION_REPO }}
 
       - name: Clean up
-        run: rm -rf repo_to_sync destination_repo
+        run: rm -rf repo_to_sync
