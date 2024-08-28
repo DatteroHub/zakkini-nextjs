@@ -29,7 +29,7 @@ jobs:
           cd destination_repo
           
           # Rimuovi i workflow dalla repository clonata
-          git rm -r --cached .github/workflows
+          git rm -r --cached .github
 
           # Aggiungi e committa i cambiamenti
           git add .
