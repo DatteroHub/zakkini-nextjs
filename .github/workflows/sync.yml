@@ -19,13 +19,24 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Clone destination repository
-        run: |
-          git clone --bare $ORIGINAL_REPO_URL repo_to_sync
-          cd repo_to_sync
-          git push --mirror $DESTINATION_REPO
         env:
           DESTINATION_REPO: https://${{ secrets.MASTER_REPO_PAT }}@github.com/DatteroMaster/zakkini-nextjs.git
           ORIGINAL_REPO_URL: ${{ github.event.repository.url }}
+        run: |
+          git clone --bare $ORIGINAL_REPO_URL repo_to_sync
+          cd repo_to_sync
+          git clone $DESTINATION_REPO destination_repo
+          cd destination_repo
+          
+          # Rimuovi i workflow dalla repository clonata
+          git rm -r --cached .github/workflows
+
+          # Aggiungi e committa i cambiamenti
+          git add .
+          git commit -m "Sync repository excluding workflows"
+
+          # Esegui il push alla repository di destinazione
+          git push origin main
 
       - name: Clean up
-        run: rm -rf repo_to_sync
+        run: rm -rf repo_to_sync destination_repo
