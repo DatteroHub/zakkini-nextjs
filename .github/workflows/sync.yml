@@ -23,9 +23,9 @@ jobs:
           DESTINATION_REPO: https://${{ secrets.MASTER_REPO_PAT }}@github.com/DatteroMaster/zakkini-nextjs.git
           ORIGINAL_REPO_URL: ${{ github.event.repository.url }}
         run: |
-          git clone --bare $ORIGINAL_REPO_URL repo_to_sync
+          git clone --bare ${{ ORIGINAL_REPO_URL }}.git repo_to_sync
           cd repo_to_sync
-          git clone $DESTINATION_REPO destination_repo
+          git clone ${{ DESTINATION_REPO }} destination_repo
           cd destination_repo
           
           # Rimuovi la cartella .github (che contiene i workflow) se esiste
