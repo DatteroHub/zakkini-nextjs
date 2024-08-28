@@ -5,8 +5,6 @@ on:
     branches:
       - main
 
-permissions: write-all
-
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -26,4 +24,4 @@ jobs:
         
       - name: Push changes to target repository
         run: |
-          git push -u target main --force
+          git push target main
