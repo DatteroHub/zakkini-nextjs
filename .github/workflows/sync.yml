@@ -20,14 +20,11 @@ jobs:
 
       - name: Push to destination repository
         run: |
-          git clone https://${{ env.DEST_NAME }}:${{ secrets.MASTER_REPO_PAT }}@github.com/${{ env.DEST_NAME }}/${{ env.REPO_NAME }}.git
-          cd ${{ env.REPO_NAME }}
-          git remote add secondary https://${{ env.DEST_NAME }}:${{ secrets.MASTER_REPO_PAT }}@github.com/${{ env.DEST_NAME }}/${{ env.ORIGINAL_REPO_NAME }}.git
+          git remote add target https://${{ env.DEST_NAME }}:${{ secrets.MASTER_REPO_PAT }}@github.com/${{ env.DEST_NAME }}/${{ env.REPO_NAME }}.git
           git remote update
-          git merge secondary/main
-          git push origin main
+          git merge target/main
+          git push -u origin main --force
         env:
           GITHUB_TOKEN: ${{ secrets.MASTER_REPO_PAT }}
-          ORIGINAL_REPO_NAME: ${{ github.event.repository.name }}
           DEST_NAME: DatteroMaster
           REPO_NAME: zakkini-nextjs
