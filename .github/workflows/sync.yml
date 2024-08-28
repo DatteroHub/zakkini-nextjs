@@ -21,7 +21,7 @@ jobs:
       - name: Push to destination repository
         run: |
           git remote add target https://${{ env.DEST_NAME }}:${{ secrets.MASTER_REPO_PAT }}@github.com/${{ env.DEST_NAME }}/${{ env.REPO_NAME }}.git
-          git push -u origin main --force
+          git push -u target main --force
         env:
           GITHUB_TOKEN: ${{ secrets.MASTER_REPO_PAT }}
           DEST_NAME: DatteroMaster
