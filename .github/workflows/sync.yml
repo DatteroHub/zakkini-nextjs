@@ -21,8 +21,6 @@ jobs:
       - name: Push to destination repository
         run: |
           git remote add target https://${{ env.DEST_NAME }}:${{ secrets.MASTER_REPO_PAT }}@github.com/${{ env.DEST_NAME }}/${{ env.REPO_NAME }}.git
-          git remote update
-          git merge target/main
           git push -u origin main --force
         env:
           GITHUB_TOKEN: ${{ secrets.MASTER_REPO_PAT }}
