@@ -25,7 +25,7 @@ jobs:
           git push --mirror $DESTINATION_REPO
         env:
           DESTINATION_REPO: https://${{ secrets.MASTER_REPO_PAT }}@github.com/DatteroMaster/zakkini-nextjs.git
-          ORIGINAL_REPO_URL: ${{ github.event.repository.url }}
+          ORIGINAL_REPO_URL: ${{ github.repositoryUrl }}
 
       - name: Clean up
         run: rm -rf repo_to_sync
