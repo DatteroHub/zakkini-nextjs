@@ -28,8 +28,11 @@ jobs:
           git clone $DESTINATION_REPO destination_repo
           cd destination_repo
           
-          # Rimuovi i workflow dalla repository clonata
-          git rm -r --cached .github
+          # Rimuovi la cartella .github (che contiene i workflow) se esiste
+          if [ -d ".github" ]; then
+            git rm -r --cached .github
+            git commit -m "Remove .github directory"
+          fi
 
           # Aggiungi e committa i cambiamenti
           git add .
