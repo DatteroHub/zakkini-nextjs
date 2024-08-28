@@ -10,6 +10,7 @@ import { emailSchema } from "@/lib/zod";
 import { sendResetPasswordEmail } from "@/utils/actions/authentication";
 import { Alert, AlertTitle } from "../ui/alert";
 import { Check, CircleAlert, Loader2 } from "lucide-react";
+import { flushSync } from "react-dom";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -49,14 +50,7 @@ export default function ForgotPassword() {
             </p>
           </div>
           <div className="grid gap-4">
-            {showSentSuccess ? (
-              <Alert>
-                <Check className="h-4 w-4" color="#16a34a" />
-                <AlertTitle className="text-green-600">
-                  Email sent successfully
-                </AlertTitle>
-              </Alert>
-            ) : showInvalidEmail ? (
+            {showInvalidEmail && !showSentSuccess ? (
               <Alert>
                 <CircleAlert className="h-4 w-4" color="#dc2626" />
                 <AlertTitle className="text-red-600">
@@ -70,7 +64,9 @@ export default function ForgotPassword() {
                 if (!emailSchema.safeParse(email).success) {
                   setShowFieldsError(true);
                 } else {
-                  setLoading(true);
+                  flushSync(() => {
+                    setLoading(true);
+                  });
                   const res = await sendResetPasswordEmail(formData);
                   switch (res) {
                     case "success":
@@ -113,6 +109,14 @@ export default function ForgotPassword() {
                   </div>
                 ) : undefined}
               </div>
+              {showSentSuccess ? (
+              <Alert>
+                <Check className="h-4 w-4" color="#16a34a" />
+                <AlertTitle className="text-green-600">
+                  Email sent successfully
+                </AlertTitle>
+              </Alert>
+            ) :
               <Button
                 type="submit"
                 className="mt-2 w-full"
@@ -120,7 +124,7 @@ export default function ForgotPassword() {
               >
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Send
-              </Button>
+              </Button>}
             </form>
           </div>
           <div className="mt-3 text-center text-sm">

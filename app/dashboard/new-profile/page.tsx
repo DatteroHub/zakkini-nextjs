@@ -2,7 +2,6 @@ import Dashboard from "@/components/dashboard/Dashboard";
 import NewProfile from "@/components/new-profile/NewProfile";
 import { Metadata } from "next";
 
-//export const runtime = "edge";
 export const metadata: Metadata = {
   title: 'New Profile',
 };

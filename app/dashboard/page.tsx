@@ -2,7 +2,6 @@ import Dashboard from "@/components/dashboard/Dashboard";
 import EmptyDashboard from "@/components/dashboard/EmptyDashboard";
 import { Metadata } from "next";
 
-//export const runtime = "edge";
 export const metadata: Metadata = {
   title: 'Dashboard',
 };

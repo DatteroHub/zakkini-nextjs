@@ -1,22 +1,43 @@
-// Import the functions you need from the SDKs you need
-import { getApp, getApps, initializeApp } from "firebase/app";
+import { getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-// Hint: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCIHMQf8QP75KBGbA3sXFqGAQkt0SdokaM",
-  authDomain: "dattero-65ea4.firebaseapp.com",
-  projectId: "dattero-65ea4",
-  storageBucket: "dattero-65ea4.appspot.com",
-  messagingSenderId: "959983396856",
-  appId: "1:959983396856:web:0bb69b616a37d90782580d"
+// TODO move to env
+
+// Initialize Firebase - Dattero Project
+const firebaseConfigDattero = {
+  apiKey: "AIzaSyDgJJFiIld-N1-P0a5TvEX9RI24gUYKIdo",
+  authDomain: "dattero-org.firebaseapp.com",
+  projectId: "dattero-org",
+  storageBucket: "dattero-org.appspot.com",
+  messagingSenderId: "832236057697",
+  appId: "1:832236057697:web:99ebbaad425a76900ce620",
 };
 
-// Initialize Firebase
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-const fbAuth = getAuth();
+const appDattero =
+  getApps().find((app) => app.name === "dattero_app") ??
+  initializeApp(firebaseConfigDattero, "dattero_app");
+const fbAuth = getAuth(appDattero);
+const dbDattero = getFirestore(appDattero);
 
-export { app, fbAuth };
+export { fbAuth, dbDattero };
+
+// Initialize Firebase - Zakkini Project
+const firebaseConfigZakkini = {
+  apiKey: "AIzaSyDUsELlhVlFkMMMXAFy2jyeCEG0CrFRxs0",
+  authDomain: "zakkini-app.firebaseapp.com",
+  projectId: "zakkini-app",
+  storageBucket: "zakkini-app.appspot.com",
+  messagingSenderId: "164056834374",
+  appId: "1:164056834374:web:8b1989be0656d08c550547",
+};
+
+const appZakkini =
+  getApps().find((app) => app.name === "zakkini_app") ??
+  initializeApp(firebaseConfigZakkini, "zakkini_app");
+const db = getFirestore(appZakkini);
+
+export { db };
+
+export const USERS_COLLECTION = "users";
+export const PROFILES_COLLECTION = "profiles";

@@ -12,8 +12,9 @@ import { useState } from "react";
 import { emailSchema, passwordSchema } from "@/lib/zod";
 import { Checkbox } from "../ui/checkbox";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { Check, CircleAlert } from "lucide-react";
+import { Check, CircleAlert, Loader2 } from "lucide-react";
 import useCountdown from "@/utils/hooks/useCountdown";
+import { flushSync } from "react-dom";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -29,6 +30,7 @@ export default function SignUp() {
     null as null | { title: string; desc: string }
   );
   const { timeLeft: counter, startCountdown } = useCountdown(59);
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className="w-full lg:grid lg:grid-cols-2 h-screen">
@@ -126,6 +128,9 @@ export default function SignUp() {
                   ) {
                     setShowFieldsError(true);
                   } else {
+                    flushSync(() => {
+                      setLoading(true);
+                    });
                     const res = await doSignUp(formData);
                     switch (res) {
                       case "success":
@@ -145,6 +150,7 @@ export default function SignUp() {
                           desc: "Account not created, please retry.",
                         });
                     }
+                    setLoading(false);
                   }
                 }}
               >
@@ -307,7 +313,14 @@ export default function SignUp() {
                       </p>
                     </div>
                   </div>
-                  <Button type="submit" className="mt-3 w-full">
+                  <Button
+                    type="submit"
+                    className="mt-3 w-full"
+                    disabled={loading ? true : false}
+                  >
+                    {loading && (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     Create account
                   </Button>
                 </div>

@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "pages:build": "npx @cloudflare/next-on-pages"
+    "lint": "next lint"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.0",
@@ -26,7 +25,6 @@
     "date-fns": "^3.6.0",
     "firebase": "^10.13.0",
     "lucide-react": "^0.424.0",
-    "mongoose": "^8.5.2",
     "next": "^14.2.6",
     "next-auth": "^5.0.0-beta.20",
     "next-themes": "^0.3.0",
@@ -39,8 +37,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.2",
-    "@types/mongoose": "^5.11.96",
     "@types/node": "^20",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",

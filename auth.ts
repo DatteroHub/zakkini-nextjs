@@ -41,17 +41,16 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             }
           })
           .catch((error) => {
-            console.log(error);
+            console.error(error);
           });
       },
     }),
   ],
   callbacks: {
     async signIn({ account, user }) {
-      // TODO google provider changes uid everytime
-      // IMPORTANT Mongoose does not work in edge environment
-      await checkUsersOnDB(account?.provider, user);
+      await checkUsersOnDB(account?.provider, user.name, user.email);
       return true;
+      // TODO custom error page to manage errors on db and email_verified
     },
   },
   pages: {

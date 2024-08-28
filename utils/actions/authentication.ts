@@ -1,5 +1,5 @@
 "use server";
-import { fbAuth } from "@/lib/firebase";
+import { db, dbDattero, fbAuth, USERS_COLLECTION } from "@/lib/firebase";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -7,11 +7,13 @@ import {
   updateProfile,
   User,
 } from "firebase/auth";
-import { getDatteroUserModel } from "@/models/DatteroUser";
-import { getZakkiniUserModel } from "@/models/ZakkiniUser";
-import connectDBDattero from "@/lib/dbDattero";
-import connectDB from "@/lib/db";
-import { User as NextUser } from "next-auth";
+import { doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
+import {
+  datteroUserScherma,
+  DatteroUserType,
+  zakkiniUserScherma,
+  ZakkiniUserType,
+} from "@/lib/zod";
 
 export async function doSignUp(formData: any) {
   const userName = formData.get("user-name");
@@ -24,6 +26,11 @@ export async function doSignUp(formData: any) {
       user = userCredential.user;
       // save user's name on firebase
       return updateProfile(user, { displayName: userName });
+    })
+    .then(() => {
+      // add new user to db
+      // (nedded in case user dont verify email and need reset password)
+      return checkUsersOnDB("credentials", user.displayName, user.email);
     })
     .then(() => {
       // send email to user with verification link
@@ -55,10 +62,9 @@ export async function sendResetPasswordEmail(formData: any) {
   const email = formData.get("email");
 
   // check if email exists
-  const conn_d = await connectDBDattero();
-  const DatteroUser = conn_d ? getDatteroUserModel(conn_d) : null;
-  const existingUser_d = await DatteroUser?.findOne({ email });
-  if (!existingUser_d) return "email_not_found";
+  const userRef_D = doc(dbDattero, USERS_COLLECTION, email);
+  const existingUser_D = await getDoc(userRef_D);
+  if (!existingUser_D.exists()) return "email_not_found";
 
   return sendPasswordResetEmail(fbAuth, email)
     .then(() => {
@@ -71,38 +77,66 @@ export async function sendResetPasswordEmail(formData: any) {
 
 export async function checkUsersOnDB(
   provider: string | undefined,
-  user: NextUser
+  userName: string | null | undefined,
+  email: string | null | undefined
 ) {
-  // check existing user - Dattero
-  const conn_d = await connectDBDattero();
-  const DatteroUser = conn_d ? getDatteroUserModel(conn_d) : null;
-  const existingUser_d = await DatteroUser?.findOne({ authId: user.id });
-  if (!existingUser_d) {
-    await DatteroUser?.create({
-      authId: user.id,
-      userName: user.name,
-      email: user.email,
-      authProviderType: provider,
-      datteroApps: ["zakkini"],
-    });
-  } else {
-    // check list of apps
-    if (!existingUser_d.datteroApps.includes("zakkini")) {
-      existingUser_d.datteroApps.push("zakkini");
-      await existingUser_d.save();
+  const fbEmailVerified = fbAuth.currentUser?.emailVerified;
+  try {
+    // check existing user - Dattero
+    const userRef_D = doc(dbDattero, USERS_COLLECTION, email!);
+    const existingUser_D = await getDoc(userRef_D);
+    if (!existingUser_D.exists()) {
+      const data: DatteroUserType = {
+        userName: userName!,
+        email: email!,
+        emailVerified: fbEmailVerified ?? true,
+        authProviders: [provider!],
+        datteroApps: ["zakkini"],
+      };
+      datteroUserScherma.safeParse(data).success &&
+        (await setDoc(userRef_D, data));
+    } else {
+      // check list of apps and authProviders
+      let mustUpdate = false;
+      let emailVerified = existingUser_D.data().emailVerified;
+      const apps = existingUser_D.data().datteroApps;
+      const providers = existingUser_D.data().authProviders;
+      if (!apps.includes("zakkini")) {
+        mustUpdate = true;
+        apps.push("zakkini");
+      }
+      if (!providers.includes(provider)) {
+        mustUpdate = true;
+        providers.push(provider);
+      }
+      if (fbEmailVerified != undefined && fbEmailVerified != emailVerified) {
+        emailVerified = fbEmailVerified;
+        mustUpdate = true;
+      }
+      if (mustUpdate) {
+        const data: DatteroUserType = {
+          emailVerified: emailVerified,
+          authProviders: providers,
+          datteroApps: apps,
+        };
+        datteroUserScherma.safeParse(data).success &&
+          (await updateDoc(userRef_D, data));
+      }
     }
-  }
 
-  // check existing user - Zakkini
-  const conn = await connectDB();
-  const ZakkiniUser = conn ? getZakkiniUserModel(conn) : null;
-  const existingUser = await ZakkiniUser?.findOne({ authId: user.id });
-  if (!existingUser) {
-    await ZakkiniUser?.create({
-      authId: user.id,
-      userName: user.name,
-      email: user.email,
-      profiles: [],
-    });
+    // check existing user - Zakkini
+    const userRef = doc(db, USERS_COLLECTION, email!);
+    const existingUser = await getDoc(userRef);
+    if (!existingUser.exists()) {
+      const data: ZakkiniUserType = {
+        userName: userName!,
+        email: email!,
+      };
+      zakkiniUserScherma.safeParse(data).success &&
+        (await setDoc(userRef, data));
+    }
+  } catch (error) {
+    console.error("DB: Error with Firebase Firestore db", error);
+    throw error;
   }
 }

@@ -4,7 +4,6 @@ import "@/styles/globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import Provider from "./_provider";
 
-//export const runtime = "edge";
 export const metadata: Metadata = {
   title: {
     template: "%s | Zakkini",
