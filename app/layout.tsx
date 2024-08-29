@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
+import ClientProvider from "@/components/provider/ClientProvider";
+import ServerProvider from "@/components/provider/ServerProvider";
 import { Toaster } from "@/components/ui/sonner";
-import Provider from "./_provider";
+import { getLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: {
@@ -21,13 +23,16 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body className={inter.className}>
-        <Provider>
-          <main>{children}</main>
-          <Toaster />
-        </Provider>
+        <ServerProvider>
+          <ClientProvider>
+            <main>{children}</main>
+            <Toaster />
+          </ClientProvider>
+        </ServerProvider>
       </body>
     </html>
   );

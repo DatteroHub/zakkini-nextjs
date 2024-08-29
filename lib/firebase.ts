@@ -2,16 +2,14 @@ import { getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// TODO move to env
-
 // Initialize Firebase - Dattero Project
 const firebaseConfigDattero = {
-  apiKey: "AIzaSyDgJJFiIld-N1-P0a5TvEX9RI24gUYKIdo",
-  authDomain: "dattero-org.firebaseapp.com",
-  projectId: "dattero-org",
-  storageBucket: "dattero-org.appspot.com",
-  messagingSenderId: "832236057697",
-  appId: "1:832236057697:web:99ebbaad425a76900ce620",
+  apiKey: process.env.FIREBASE_API_KEY_D,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN_D,
+  projectId: process.env.FIREBASE_PROJECT_ID_D,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET_D,
+  messagingSenderId: process.env.FIREBASE_MESSAGGING_SENDER_ID_D,
+  appId: process.env.FIREBASE_APP_ID_D,
 };
 
 const appDattero =
@@ -24,12 +22,12 @@ export { fbAuth, dbDattero };
 
 // Initialize Firebase - Zakkini Project
 const firebaseConfigZakkini = {
-  apiKey: "AIzaSyDUsELlhVlFkMMMXAFy2jyeCEG0CrFRxs0",
-  authDomain: "zakkini-app.firebaseapp.com",
-  projectId: "zakkini-app",
-  storageBucket: "zakkini-app.appspot.com",
-  messagingSenderId: "164056834374",
-  appId: "1:164056834374:web:8b1989be0656d08c550547",
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
 };
 
 const appZakkini =

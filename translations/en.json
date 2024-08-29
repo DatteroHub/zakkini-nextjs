@@ -1,0 +1,77 @@
+{
+  "General": {},
+  "Dashboard": {
+    "title": "Dashboard",
+    "breadcrumb": "Dashboard",
+    "Menu": {
+      "appname": "Zakkini",
+      "dashboard": "Dashboard",
+      "orders": "Orders",
+      "products": "Products",
+      "customers": "Customers",
+      "analytics": "Analytics",
+      "settings": "Settings",
+      "Account": {
+        "account": "Account",
+        "support": "Support",
+        "logout": "Logout"
+      },
+      "Feedback": {
+        "title": "Feedback",
+        "desc": "Report an issue or send a suggestion to help us imporove the app.",
+        "cta": "Write"
+      },
+      "Breadcrumb":{
+        "title":"Breadcrumb",
+        "subtitle": "Select a page to navigate to.",
+        "cta": "Close"
+      }
+    },
+    "Empty": {
+      "welcome": "Welcome to",
+      "appname": "Zakkini",
+      "subtitle": "Start by configuring your Zakat profile.",
+      "cta": "Start now"
+    }
+  },
+  "NewProfile": {
+    "title": "Create profile",
+    "subtitle": "Create and configure your Zakat profile.",
+    "breadcrumb": "New profile",
+    "ctaNext": "Next",
+    "ctaBack": "Back",
+    "Step1": {
+      "title": "Info",
+      "inputTitle": "Enter profile name",
+      "inputPlaceholder": "Ali",
+      "avatarTitle": "Choose an avatar"
+    },
+    "Step2": {
+      "title": "Nisab",
+      "Country": {
+        "title": "Select your country",
+        "infoTitle": "What do I enter?",
+        "infoDesc": "Enter the country you live in, the currency of this country will be the reference for the Zakat.",
+        "select": "Select country...",
+        "search": "Filter countries...",
+        "searchNotFound": "No results found."
+      },
+      "Nisab": {
+        "title": "Nisab in {country} today:",
+        "inGold": "Based on gold",
+        "inSilver": "Based on silver",
+        "switchGold": "switch to gold",
+        "switchSilver": "switch to silver",
+        "lastUpdate": "Updated {time}",
+        "infoTitle": "Gold or Silver?",
+        "infoDesc": "Hanafi madhab uses silver to determine the nisab for Zakat. Other madhabs use gold."
+      }
+    },
+    "Step3": {
+      "title": "Assets"
+    },
+    "Step4": {
+      "title": "Hawl"
+    }
+  }
+}

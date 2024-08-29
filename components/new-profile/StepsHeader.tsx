@@ -1,6 +1,9 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 export const StepsHeader = ({ currentStep }: { currentStep: number }) => {
+  const t = useTranslations("NewProfile");
+
   const Checked = ({ label }: { label: string }) => (
     <li className="flex items-center justify-end gap-2 text-primary">
       <span className="rounded p-1.5">
@@ -28,44 +31,61 @@ export const StepsHeader = ({ currentStep }: { currentStep: number }) => {
           <span className="size-6 rounded bg-primary text-center text-[10px]/6 font-bold">
             1
           </span>
-          <span className="text-primary">Your info</span>
+          <span className="text-primary">{t("Step1.title")}</span>
         </li>
       ) : (
-        <Checked label="Your info" />
+        <Checked label={t("Step1.title")} />
       )}
       {currentStep == 2 ? (
         <li className="flex items-center justify-center gap-2 text-muted font-bold">
           <span className="size-6 rounded bg-primary text-center text-[10px]/6 font-bold">
             2
           </span>
-          <span className="text-primary">Living Country</span>
+          <span className="text-primary">{t("Step2.title")}</span>
         </li>
       ) : currentStep < 2 ? (
         <li className="flex items-center justify-end gap-2">
           <span className="size-6 rounded bg-accent text-center text-[10px]/6 font-bold text-gray-600">
             2
           </span>
-          <span>Country</span>
+          <span>{t("Step2.title")}</span>
         </li>
       ) : (
-        <Checked label="Country" />
+        <Checked label={t("Step2.title")} />
       )}
       {currentStep == 3 ? (
         <li className="flex items-center justify-center gap-2 text-muted font-bold">
           <span className="size-6 rounded bg-primary text-center text-[10px]/6 font-bold">
             3
           </span>
-          <span className="text-primary">Hawl Day</span>
+          <span className="text-primary">{t("Step3.title")}</span>
         </li>
       ) : currentStep < 3 ? (
         <li className="flex items-center justify-end gap-2">
           <span className="size-6 rounded bg-accent text-center text-[10px]/6 font-bold text-gray-600">
             3
           </span>
-          <span>Hawl Day</span>
+          <span>{t("Step3.title")}</span>
         </li>
       ) : (
-        <Checked label="Hawl Day" />
+        <Checked label={t("Step3.title")} />
+      )}
+      {currentStep == 4 ? (
+        <li className="flex items-center justify-center gap-2 text-muted font-bold">
+          <span className="size-6 rounded bg-primary text-center text-[10px]/6 font-bold">
+            4
+          </span>
+          <span className="text-primary">{t("Step4.title")}</span>
+        </li>
+      ) : currentStep < 4 ? (
+        <li className="flex items-center justify-end gap-2">
+          <span className="size-6 rounded bg-accent text-center text-[10px]/6 font-bold text-gray-600">
+            4
+          </span>
+          <span>{t("Step4.title")}</span>
+        </li>
+      ) : (
+        <Checked label={t("Step4.title")} />
       )}
     </ol>
   );

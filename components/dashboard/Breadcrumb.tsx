@@ -30,12 +30,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { BreadcrumbItemType } from "@/lib/types";
 import { CornerDownRight, House } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function BreadcrumbResponsive({
   breadcrumbItems: items,
 }: {
   breadcrumbItems?: BreadcrumbItemType[];
 }) {
+  const t = useTranslations("Dashboard.Menu.Breadcrumb");
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery();
 
@@ -105,10 +107,8 @@ export function BreadcrumbResponsive({
               </DrawerTrigger>
               <DrawerContent>
                 <DrawerHeader className="text-left">
-                  <DrawerTitle>Breadcrumb</DrawerTitle>
-                  <DrawerDescription>
-                    Select a page to navigate to.
-                  </DrawerDescription>
+                  <DrawerTitle>{t("title")}</DrawerTitle>
+                  <DrawerDescription>{t("subtitle")}</DrawerDescription>
                 </DrawerHeader>
                 <div className="grid gap-1 px-4 pb-4">
                   {items.map((item, index) => (
@@ -141,7 +141,7 @@ export function BreadcrumbResponsive({
                 </div>
                 <DrawerFooter className="pt-4">
                   <DrawerClose asChild>
-                    <Button variant="outline">Close</Button>
+                    <Button variant="outline">{t("cta")}</Button>
                   </DrawerClose>
                 </DrawerFooter>
               </DrawerContent>

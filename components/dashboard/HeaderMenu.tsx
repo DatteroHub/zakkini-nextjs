@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -13,14 +12,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Card,
   CardContent,
   CardDescription,
@@ -28,28 +19,28 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { signOut, useSession } from "next-auth/react";
-import { Skeleton } from "../ui/skeleton";
 import { BreadcrumbResponsive } from "./Breadcrumb";
 import { BreadcrumbItemType } from "@/lib/types";
+import { SwitchLang } from "./SwitchLang";
+import { useTranslations } from "next-intl";
+import { AccountDropdown } from "./AccountDropdown";
 
 export default function HeaderMenu({
   breadcrumbItems,
 }: {
   breadcrumbItems?: BreadcrumbItemType[];
 }) {
-  const { data: session } = useSession();
+  const t = useTranslations("Dashboard.Menu");
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Sheet>
         <SheetTrigger asChild>
           <Button size="icon" variant="outline" className="sm:hidden">
             <PanelLeft className="h-5 w-5" />
-            <span className="sr-only">Toggle Menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="grid sm:max-w-xs">
-          <nav className="grid text-lg font-medium">
+        <SheetContent side="left" className="flex flex-col sm:max-w-xs">
+          <nav className="grid gap-4 text-lg font-medium">
             <div className="flex items-center mb-2">
               <a href="/dashboard">
                 <Image
@@ -61,103 +52,66 @@ export default function HeaderMenu({
                 />
               </a>
               <div className="ml-2 text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gradient to-gradient">
-                Zakkini
+                {t("appname")}
               </div>
             </div>
             <Link
               href="/dashboard"
-              className="flex items-center gap-4 px-3.5 text-foreground bg-accent rounded-lg"
+              className="flex items-center gap-4 px-3.5 py-2 text-foreground bg-accent rounded-lg"
             >
               <Home className="h-5 w-5" />
-              Dashboard
+              {t("dashboard")}
             </Link>
             <Link
               href="#"
-              className="flex items-center gap-4 px-3.5 text-muted-foreground rounded-lg"
+              className="flex items-center gap-4 px-3.5 py-2 text-muted-foreground rounded-lg"
             >
               <ShoppingCart className="h-5 w-5" />
-              Orders
+              {t("orders")}
             </Link>
             <Link
               href="#"
-              className="flex items-center gap-4 px-3.5 text-muted-foreground rounded-lg"
+              className="flex items-center gap-4 px-3.5 py-2 text-muted-foreground rounded-lg"
             >
               <Package className="h-5 w-5" />
-              Products
+              {t("products")}
             </Link>
             <Link
               href="#"
-              className="flex items-center gap-4 px-3.5 text-muted-foreground rounded-lg"
+              className="flex items-center gap-4 px-3.5 py-2 text-muted-foreground rounded-lg"
             >
               <Users2 className="h-5 w-5" />
-              Customers
-            </Link>
-            <Link
-              href="#"
-              className="flex items-center gap-4 px-3.5 text-muted-foreground rounded-lg"
-            >
-              <Settings className="h-5 w-5" />
-              Settings
+              {t("customers")}
             </Link>
           </nav>
-          <nav className="mt-auto grid items-start gap-3">
-            <div className="">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl">Feedback</CardTitle>
-                  <CardDescription>
-                    Report an issue or send a suggestion to help us imporove the
-                    app.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button size="sm" className="w-full">
-                    <MessageSquareMore className="mr-2 h-4 w-4" />
-                    Send
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+          <nav className="mt-auto flex justify-between gap-3">
+            <Link
+              href="#"
+              className="flex items-center gap-4 px-3.5 py-2 text-muted-foreground rounded-lg"
+            >
+              <Settings className="h-5 w-5" />
+              {t("settings")}
+            </Link>
+            <SwitchLang />
+          </nav>
+          <nav className="grid items-start gap-3">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">{t("Feedback.title")}</CardTitle>
+                <CardDescription>{t("Feedback.desc")}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button size="sm" className="w-full">
+                  <MessageSquareMore className="mr-2 h-4 w-4" />
+                  {t("Feedback.cta")}
+                </Button>
+              </CardContent>
+            </Card>
           </nav>
         </SheetContent>
       </Sheet>
       <BreadcrumbResponsive breadcrumbItems={breadcrumbItems} />
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="outline"
-            size="icon"
-            className="ml-auto overflow-hidden rounded-full focus-visible:ring-transparent"
-          >
-            {session?.user ? (
-              <Image
-                src={session.user?.image ?? "/placeholder-user.svg"}
-                width={36}
-                height={36}
-                alt="Avatar"
-                className="overflow-hidden rounded-full w-full"
-              />
-            ) : (
-              <Skeleton className="h-12 w-12 rounded-full" />
-            )}
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel className="px-2">
-            {session?.user?.email}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            style={{ cursor: "pointer" }}
-            onClick={() => signOut({ callbackUrl: "/" })}
-          >
-            Logout
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <AccountDropdown />
     </header>
   );
 }

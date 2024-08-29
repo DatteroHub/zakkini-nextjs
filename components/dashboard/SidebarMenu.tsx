@@ -19,8 +19,11 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Button } from "../ui/button";
+import { SwitchLang } from "./SwitchLang";
+import { useTranslations } from "next-intl";
 
 export default function SidebarMenu() {
+  const t = useTranslations("Dashboard.Menu");
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-60 flex-col border-r bg-background sm:flex">
       <nav className="grid gap-3 items-start px-5 sm:py-5">
@@ -34,7 +37,7 @@ export default function SidebarMenu() {
               className="w-16"
             />
             <div className="ml-2 text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gradient to-gradient">
-              Zakkini
+              {t("appname")}
             </div>
           </a>
         </div>
@@ -43,7 +46,7 @@ export default function SidebarMenu() {
           className="flex items-center gap-3 px-3 py-2 rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground"
         >
           <Home className="h-5 w-5" />
-          <span className="">Dashboard</span>
+          <span className="">{t("dashboard")}</span>
         </Link>
 
         <Link
@@ -51,7 +54,7 @@ export default function SidebarMenu() {
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
         >
           <ShoppingCart className="h-5 w-5" />
-          <span className="">Orders</span>
+          <span className="">{t("orders")}</span>
         </Link>
 
         <Link
@@ -59,7 +62,7 @@ export default function SidebarMenu() {
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
         >
           <Package className="h-5 w-5" />
-          <span className="">Products</span>
+          <span className="">{t("products")}</span>
         </Link>
 
         <Link
@@ -67,7 +70,7 @@ export default function SidebarMenu() {
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
         >
           <Users2 className="h-5 w-5" />
-          <span className="">Customers</span>
+          <span className="">{t("customers")}</span>
         </Link>
 
         <Link
@@ -75,32 +78,32 @@ export default function SidebarMenu() {
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
         >
           <LineChart className="h-5 w-5" />
-          <span className="">Analytics</span>
+          <span className="">{t("analytics")}</span>
         </Link>
       </nav>
-      <nav className="mt-auto grid items-start gap-3 px-5 sm:pt-5">
+      <nav className="mt-auto flex justify-between gap-3 px-5 sm:pt-5">
         <Link
           href="#"
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
         >
           <Settings className="h-5 w-5" />
-          <span className="">Settings</span>
+          <span className="">{t("settings")}</span>
         </Link>
+        <SwitchLang />
       </nav>
       <nav className="grid items-start gap-3">
         <div className="p-4">
           <Card>
             <CardHeader className="p-2 pt-0 sm:p-4">
-              <CardTitle className="text-xl">Feedback</CardTitle>
+              <CardTitle className="text-xl">{t("Feedback.title")}</CardTitle>
               <CardDescription>
-                Report an issue or send a suggestion to help us imporove the
-                app.
+              {t("Feedback.desc")}
               </CardDescription>
             </CardHeader>
             <CardContent className="p-2 pt-0 sm:p-4 sm:pt-0">
               <Button size="sm" className="w-full">
                 <MessageSquareMore className="mr-2 h-4 w-4" />
-                Send
+                {t("Feedback.cta")}
               </Button>
             </CardContent>
           </Card>

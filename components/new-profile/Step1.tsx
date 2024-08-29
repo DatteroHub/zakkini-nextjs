@@ -3,23 +3,25 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function Step1({ ...props }: React.ComponentProps<any>) {
+  const t = useTranslations("NewProfile.Step1");
   const { profileName, profilePic, setProfileName, setProfilePic } = props;
   return (
     <div className="flex flex-col w-full gap-8">
       <div className="grid w-full items-center gap-4">
-        <Label htmlFor="name">Enter profile name</Label>
+        <Label htmlFor="name">{t("inputTitle")}</Label>
         <Input
           type="text"
           id="name"
-          placeholder="Ali"
+          placeholder={t("inputPlaceholder")}
           onChange={(e) => setProfileName(e.target.value)}
         />
       </div>
       <div className="grid w-full items-center gap-4">
-        <Label>Choose an avatar</Label>
-        <div className="grid grid-cols-3 gap-4">
+        <Label>{t("avatarTitle")}</Label>
+        <div className="grid grid-cols-3 gap-4 px-6 lg:px-10 mt-2">
           <Button
             size="icon"
             className={`aspect-square w-full h-full rounded-full bg-gray-200 hover:opacity-85 ${

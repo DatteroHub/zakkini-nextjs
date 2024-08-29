@@ -17,17 +17,23 @@ import {
 } from "@/components/ui/popover";
 import useMediaQuery from "@/utils/hooks/useMediaQuery";
 import { ComboboxItemType } from "@/lib/types";
-import { ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
 
 export function ComboboxResponsive({
   comboboxItems: items,
   selectedItem,
   setSelectedItem,
+  label,
+  searchLabel,
+  notFoundLabel,
   width,
 }: {
   comboboxItems: ComboboxItemType[];
   selectedItem: ComboboxItemType | null;
   setSelectedItem: Dispatch<SetStateAction<ComboboxItemType | null>>;
+  label: string;
+  searchLabel: string;
+  notFoundLabel: string;
   width?: string;
 }) {
   const [open, setOpen] = useState(false);
@@ -41,15 +47,21 @@ export function ComboboxResponsive({
             variant="outline"
             className={`${width ?? "w-[200px]"} justify-between`}
           >
-            {selectedItem ? <>{selectedItem.label}</> : <>Select country...</>}
+            {selectedItem ? <>{selectedItem.label}</> : <>{label}</>}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className={`${width ? "w-[300px]" : "w-[200px]"} p-0`} align="start">
+        <PopoverContent
+          className={`${width ? "w-[350px]" : "w-[200px]"} p-0`}
+          align="start"
+        >
           <ItemsList
             setOpen={setOpen}
             items={items}
+            selectedItem={selectedItem}
             setSelectedItem={setSelectedItem}
+            searchLabel={searchLabel}
+            notFoundLabel={notFoundLabel}
           />
         </PopoverContent>
       </Popover>
@@ -63,7 +75,7 @@ export function ComboboxResponsive({
           variant="outline"
           className={`${width ?? "w-[200px]"} justify-between`}
         >
-          {selectedItem ? <>{selectedItem.label}</> : <>Select country...</>}
+          {selectedItem ? <>{selectedItem.label}</> : <>{label}</>}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </DrawerTrigger>
@@ -72,7 +84,10 @@ export function ComboboxResponsive({
           <ItemsList
             setOpen={setOpen}
             items={items}
+            selectedItem={selectedItem}
             setSelectedItem={setSelectedItem}
+            searchLabel={searchLabel}
+            notFoundLabel={notFoundLabel}
           />
         </div>
       </DrawerContent>
@@ -83,29 +98,49 @@ export function ComboboxResponsive({
 function ItemsList({
   setOpen,
   items,
+  selectedItem,
   setSelectedItem,
+  searchLabel,
+  notFoundLabel,
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>;
   items: ComboboxItemType[];
+  selectedItem: ComboboxItemType | null;
   setSelectedItem: Dispatch<SetStateAction<ComboboxItemType | null>>;
+  searchLabel: string;
+  notFoundLabel: string;
 }) {
   return (
     <Command>
-      <CommandInput placeholder="Filter countries..." />
+      <CommandInput placeholder={searchLabel} />
       <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandEmpty>{notFoundLabel}</CommandEmpty>
         <CommandGroup>
           {items.map((item) => (
             <CommandItem
-              key={item.label}
-              value={item.label}
+              // label+value because there are countries with multiple currencies
+              key={item.label + item.value}
+              value={item.label + item.value}
               onSelect={(value) => {
                 setSelectedItem(
-                  items.find((priority) => priority.label === value) || null
+                  items.find(
+                    (priority) => priority.label + priority.value === value
+                  ) || null
                 );
                 setOpen(false);
               }}
             >
+              <Check
+                className={`
+                      mr-2 h-4 w-4
+                      ${
+                        selectedItem?.label! + selectedItem?.value! ===
+                        item.label + item.value
+                          ? "opacity-100"
+                          : "opacity-0"
+                      }
+                    `}
+              />
               <div>{item.label}</div>
               <div className="ml-auto">{item.value}</div>
             </CommandItem>
