@@ -1,5 +1,5 @@
-import Dashboard from "@/components/dashboard/Dashboard";
-import EmptyDashboard from "@/components/dashboard/EmptyDashboard";
+import { Dashboard } from "@/components/dashboard/Dashboard";
+import DashboardWrapper from "@/components/dashboard/DashboardWrapper";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
@@ -11,9 +11,13 @@ const DashboardPage = async () => {
   const t = await getTranslations("Dashboard");
   return (
     <>
-      <Dashboard title={t("title")}>
-        <EmptyDashboard />
-      </Dashboard>
+      <DashboardWrapper
+        title={t("title")}
+        subtitle={t("subtitle")}
+        selectedMenu={1}
+      >
+        <Dashboard />
+      </DashboardWrapper>
     </>
   );
 };

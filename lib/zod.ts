@@ -33,8 +33,20 @@ export type ZakkiniUserType = z.infer<typeof zakkiniUserScherma>;
 export const userProfileSchema = z.object({
   name: z.string().optional(),
   imgId: z.number().optional(),
-  country: z.string().optional(),
-  metal: z.string().optional(),
+  country: z
+    .object({
+      name: z.string().optional(),
+      currencySymbol: z.string().optional(),
+      currencyCode: z.string().optional(),
+    })
+    .optional(),
+  metal: z.enum(["gold", "silver"]).optional(),
+  assets: z
+    .object({
+      totalAssets: z.number().optional(),
+      data: z.array(z.number()).optional(),
+    })
+    .optional(),
   hDay: z.string().optional(),
   isZakater: z.boolean().optional(),
 });

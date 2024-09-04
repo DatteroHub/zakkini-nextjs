@@ -1,29 +1,30 @@
 import DashboardWrapper from "@/components/dashboard/DashboardWrapper";
-import NewProfile from "@/components/new-profile/NewProfile";
+import { Nisab } from "@/components/nisab/Nisab";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 export const metadata: Metadata = {
-  title: 'New Profile',
+  title: "Nisab",
 };
 
-const NewProfilePage = async () => {
+const NisabPage = async () => {
   const t = await getTranslations("");
   const breadcrumb = [
     { href: "/dashboard", label: t("Dashboard.breadcrumb") },
-    { label: t("NewProfile.breadcrumb") },
+    { label: t("Nisab.breadcrumb") },
   ];
   return (
     <>
       <DashboardWrapper
-        title={t("NewProfile.title")}
-        subtitle={t("NewProfile.subtitle")}
+        title={t("Nisab.title")}
+        subtitle={t("Nisab.subtitle")}
         breadcrumbItems={breadcrumb}
+        selectedMenu={2}
       >
-        <NewProfile />
+        <Nisab />
       </DashboardWrapper>
     </>
   );
 };
 
-export default NewProfilePage;
+export default NisabPage;

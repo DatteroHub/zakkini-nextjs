@@ -2,14 +2,14 @@
   "General": {},
   "Dashboard": {
     "title": "Dashboard",
+    "subtitle": "Everything you need to know at a glance",
     "breadcrumb": "Dashboard",
     "Menu": {
       "appname": "Zakkini",
       "dashboard": "Dashboard",
-      "orders": "Orders",
-      "products": "Products",
-      "customers": "Customers",
-      "analytics": "Analytics",
+      "nisab": "Nisab",
+      "assets": "Assets",
+      "zakat": "My Zakat",
       "settings": "Settings",
       "Account": {
         "account": "Account",
@@ -21,8 +21,8 @@
         "desc": "Report an issue or send a suggestion to help us imporove the app.",
         "cta": "Write"
       },
-      "Breadcrumb":{
-        "title":"Breadcrumb",
+      "Breadcrumb": {
+        "title": "Breadcrumb",
         "subtitle": "Select a page to navigate to.",
         "cta": "Close"
       }
@@ -32,22 +32,52 @@
       "appname": "Zakkini",
       "subtitle": "Start by configuring your Zakat profile.",
       "cta": "Start now"
+    },
+    "NotComplete": {
+      "title": "Please complete your profile to continue",
+      "titleNonZakater": "What should I do now?",
+      "step1": "Your Info",
+      "step2": "Your Nisab",
+      "step3": "Your Assets",
+      "step4": "Your Zakat Day",
+      "labelAssets": "Add your assets to determine if you have to pay Zakat.",
+      "labelZakater": "Configure your Zakat Day to determine when you should pay Zakat.",
+      "labelNonZakater": "Since Zakat is not due from you, you will have to monitor your assets and check when they exceed the Nisab threshold.<br></br><br></br>To do so you can come back to Zakkini and update your assets.",
+      "ctaAssets": "Go to Assets",
+      "ctaZakater": "Go to My Zakat",
+      "NisabToday": {
+        "appname": "Nisab Today",
+        "linkDesc": "For rapid Nisab check you can visit:"
+      }
     }
   },
   "NewProfile": {
     "title": "Create profile",
     "subtitle": "Create and configure your Zakat profile.",
     "breadcrumb": "New profile",
-    "ctaNext": "Next",
     "ctaBack": "Back",
+    "ctaNext": "Next",
+    "ctaSave": "Save",
+    "Success": {
+      "title": "Profile created successfully!",
+      "desc": "You can continue configuring your profile by adding your assets. Otherwise, you can do this later.",
+      "ctaContinue": "Continue",
+      "ctaSkip": "Go to Dashboard"
+    },
+    "Error": {
+      "title": "Oops!",
+      "desc": "An error occurred while creating the new profile, please try again.",
+      "cta": "Ok"
+    },
     "Step1": {
-      "title": "Info",
+      "title": "Your Info",
       "inputTitle": "Enter profile name",
       "inputPlaceholder": "Ali",
+      "alreadyExists": "This profile name already exists.",
       "avatarTitle": "Choose an avatar"
     },
     "Step2": {
-      "title": "Nisab",
+      "title": "Your Nisab",
       "Country": {
         "title": "Select your country",
         "infoTitle": "What do I enter?",
@@ -63,15 +93,108 @@
         "switchGold": "switch to gold",
         "switchSilver": "switch to silver",
         "lastUpdate": "Updated {time}",
+        "infoTitle": "What is Nisab?",
+        "infoDesc": "Nisab is the minimum value of assets you can own before you are required to pay Zakat.",
+        "GoldSilver": {
+          "infoTitle": "Gold or Silver?",
+          "infoDesc": "Hanafi madhab uses silver to determine the Nisab for Zakat. The other madhabs use gold."
+        }
+      }
+    }
+  },
+  "Nisab": {
+    "title": "My Nisab",
+    "subtitle": "The Nisab value in your living country.",
+    "breadcrumb": "Nisab",
+    "faqs": "FAQs",
+    "Country": {
+      "title": "Your country",
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "infoTitle": "Which country do I enter?",
+      "infoDesc": "Enter the country you live in, the currency of this country will be the reference for the Zakat.",
+      "select": "Select country...",
+      "search": "Filter countries...",
+      "searchNotFound": "No results found."
+    },
+    "Nisab": {
+      "title": "Nisab in {country} today:",
+      "inGold": "Based on gold",
+      "inSilver": "Based on silver",
+      "switchGold": "switch to gold",
+      "switchSilver": "switch to silver",
+      "lastUpdate": "Updated {time}",
+      "infoTitle": "What is Nisab?",
+      "infoDesc": "Nisab is the minimum value of assets you can own before you are required to pay Zakat.",
+      "GoldSilver": {
         "infoTitle": "Gold or Silver?",
-        "infoDesc": "Hanafi madhab uses silver to determine the nisab for Zakat. Other madhabs use gold."
+        "infoDesc": "Hanafi madhab uses silver to determine the Nisab for Zakat. The other madhabs use gold."
       }
     },
-    "Step3": {
-      "title": "Assets"
+    "Success": {
+      "title": "Nisab updated successfully!"
     },
-    "Step4": {
-      "title": "Hawl"
+    "Error": {
+      "title": "Oops!",
+      "desc": "An error occurred while updating your Nisab, please try again.",
+      "cta": "Ok"
+    }
+  },
+  "Assets": {
+    "title": "My Assets",
+    "subtitle": "The record of all your assets on which Zakat will be calculated.",
+    "breadcrumb": "Assets",
+    "moneyLabel": "Enter your assets value",
+    "totalAssets": "Nisab Today: {currency} {nisab} | Total assets: {currency} {money}",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "Success": {
+      "title": "Assets updated successfully!"
+    },
+    "Error": {
+      "title": "Oops!",
+      "desc": "An error occurred while updating your assets, please try again.",
+      "cta": "Ok"
+    }
+  },
+  "Zakat": {
+    "title": "My Zakat",
+    "subtitle": "Manage your Zakat due.",
+    "breadcrumb": "Zakat",
+    "infoTitle": "When should I pay the Zakat?",
+    "infoDesc": "You need to figure out your Hawl Day. Please answer the following questions.",
+    "Hawl": {
+      "q1Label": "Did you pay Zakat last year?",
+      "yes": "Yes",
+      "no": "no",
+      "inputTitle": "Enter your Hawl Day:",
+      "infoTitle": "What is Hawl Day?",
+      "infoDesc": "Hawl is when your assets exceed the Nisab treshold for one lunar (Hijri) year. You have to identify the day you first exceeded it and calculate one precise Hijri year from that day. ",
+      "hawlDay": "Zakat Day: {day, date, long} | {hijri}"
+    }
+  },
+  "ProfileStatus": {
+    "Zakater": {
+      "title": "You are a Zakater!",
+      "desc": "You have exceeded the Nisab treshold, so Zakat is due from you."
+    },
+    "NonZakater": {
+      "title": "Not yet...",
+      "desc": "You have not exceeded the Nisab treshold, so Zakat is not due from you."
+    }
+  },
+  "Charts": {
+    "NisabZakat": {
+      "title": "Your status",
+      "desc": "Nisab vs Assets",
+      "nisabLabel": "Nisab",
+      "assetsLabel": "Assets",
+      "zakatPrevisionLabel": "Zakat forecast",
+      "tooltip": "value: ",
+      "nisabWins": "Your assets are under the Nisab treshold",
+      "assetsWins": "Your assets exceeded the Nisab treshold"
     }
   }
 }

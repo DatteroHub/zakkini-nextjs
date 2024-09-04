@@ -10,3 +10,4 @@ export const languages = {
 };
 
 export const defaultLocale: Locale = "en";
+export const defaultMoneyLocale: string = "it-IT"; // TODO add support to other locales

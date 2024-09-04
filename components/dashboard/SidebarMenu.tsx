@@ -1,13 +1,12 @@
 "use client";
 
 import {
+  Banknote,
+  ChartBarBig,
+  HandHeart,
   Home,
-  LineChart,
   MessageSquareMore,
-  Package,
   Settings,
-  ShoppingCart,
-  Users2,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -22,7 +21,11 @@ import { Button } from "../ui/button";
 import { SwitchLang } from "./SwitchLang";
 import { useTranslations } from "next-intl";
 
-export default function SidebarMenu() {
+export default function SidebarMenu({
+  selectedMenu,
+}: {
+  selectedMenu?: number;
+}) {
   const t = useTranslations("Dashboard.Menu");
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-60 flex-col border-r bg-background sm:flex">
@@ -43,48 +46,57 @@ export default function SidebarMenu() {
         </div>
         <Link
           href="/dashboard"
-          className="flex items-center gap-3 px-3 py-2 rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground"
+          className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:text-foreground ${
+            selectedMenu == 1
+              ? "bg-accent text-foreground"
+              : "text-muted-foreground"
+          }`}
         >
           <Home className="h-5 w-5" />
           <span className="">{t("dashboard")}</span>
         </Link>
-
         <Link
-          href="#"
-          className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+          href="/dashboard/nisab"
+          className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:text-foreground ${
+            selectedMenu == 2
+              ? "bg-accent text-foreground"
+              : "text-muted-foreground"
+          }`}
         >
-          <ShoppingCart className="h-5 w-5" />
-          <span className="">{t("orders")}</span>
+          <Banknote className="h-5 w-5" />
+          <span className="">{t("nisab")}</span>
         </Link>
-
         <Link
-          href="#"
-          className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+          href="/dashboard/assets"
+          className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:text-foreground ${
+            selectedMenu == 3
+              ? "bg-accent text-foreground"
+              : "text-muted-foreground"
+          }`}
         >
-          <Package className="h-5 w-5" />
-          <span className="">{t("products")}</span>
+          <ChartBarBig className="h-5 w-5" />
+          <span className="">{t("assets")}</span>
         </Link>
-
         <Link
-          href="#"
-          className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+          href="/dashboard/my-zakat"
+          className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:text-foreground ${
+            selectedMenu == 4
+              ? "bg-accent text-foreground"
+              : "text-muted-foreground"
+          }`}
         >
-          <Users2 className="h-5 w-5" />
-          <span className="">{t("customers")}</span>
-        </Link>
-
-        <Link
-          href="#"
-          className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <LineChart className="h-5 w-5" />
-          <span className="">{t("analytics")}</span>
+          <HandHeart className="h-5 w-5" />
+          <span className="">{t("zakat")}</span>
         </Link>
       </nav>
       <nav className="mt-auto flex justify-between gap-3 px-5 sm:pt-5">
         <Link
-          href="#"
-          className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+          href="/dashboard/settings"
+          className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:text-foreground ${
+            selectedMenu == 9
+              ? "bg-accent text-foreground"
+              : "text-muted-foreground"
+          }`}
         >
           <Settings className="h-5 w-5" />
           <span className="">{t("settings")}</span>
@@ -96,9 +108,7 @@ export default function SidebarMenu() {
           <Card>
             <CardHeader className="p-2 pt-0 sm:p-4">
               <CardTitle className="text-xl">{t("Feedback.title")}</CardTitle>
-              <CardDescription>
-              {t("Feedback.desc")}
-              </CardDescription>
+              <CardDescription>{t("Feedback.desc")}</CardDescription>
             </CardHeader>
             <CardContent className="p-2 pt-0 sm:p-4 sm:pt-0">
               <Button size="sm" className="w-full">

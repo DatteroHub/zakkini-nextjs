@@ -27,14 +27,18 @@ export function ComboboxResponsive({
   searchLabel,
   notFoundLabel,
   width,
+  disabled,
 }: {
   comboboxItems: ComboboxItemType[];
-  selectedItem: ComboboxItemType | null;
-  setSelectedItem: Dispatch<SetStateAction<ComboboxItemType | null>>;
+  selectedItem: ComboboxItemType | null | undefined;
+  setSelectedItem: Dispatch<
+    SetStateAction<ComboboxItemType | null | undefined>
+  >;
   label: string;
   searchLabel: string;
   notFoundLabel: string;
   width?: string;
+  disabled?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery();
@@ -46,6 +50,7 @@ export function ComboboxResponsive({
           <Button
             variant="outline"
             className={`${width ?? "w-[200px]"} justify-between`}
+            disabled={disabled}
           >
             {selectedItem ? <>{selectedItem.label}</> : <>{label}</>}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -74,6 +79,7 @@ export function ComboboxResponsive({
         <Button
           variant="outline"
           className={`${width ?? "w-[200px]"} justify-between`}
+          disabled={disabled}
         >
           {selectedItem ? <>{selectedItem.label}</> : <>{label}</>}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -105,8 +111,10 @@ function ItemsList({
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>;
   items: ComboboxItemType[];
-  selectedItem: ComboboxItemType | null;
-  setSelectedItem: Dispatch<SetStateAction<ComboboxItemType | null>>;
+  selectedItem: ComboboxItemType | null | undefined;
+  setSelectedItem: Dispatch<
+    SetStateAction<ComboboxItemType | null | undefined>
+  >;
   searchLabel: string;
   notFoundLabel: string;
 }) {

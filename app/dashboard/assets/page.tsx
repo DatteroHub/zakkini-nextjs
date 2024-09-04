@@ -1,29 +1,30 @@
+import { Assets } from "@/components/assets/Assets";
 import DashboardWrapper from "@/components/dashboard/DashboardWrapper";
-import NewProfile from "@/components/new-profile/NewProfile";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 export const metadata: Metadata = {
-  title: 'New Profile',
+  title: "Assets",
 };
 
-const NewProfilePage = async () => {
+const AssetsPage = async () => {
   const t = await getTranslations("");
   const breadcrumb = [
     { href: "/dashboard", label: t("Dashboard.breadcrumb") },
-    { label: t("NewProfile.breadcrumb") },
+    { label: t("Assets.breadcrumb") },
   ];
   return (
     <>
       <DashboardWrapper
-        title={t("NewProfile.title")}
-        subtitle={t("NewProfile.subtitle")}
+        title={t("Assets.title")}
+        subtitle={t("Assets.subtitle")}
         breadcrumbItems={breadcrumb}
+        selectedMenu={3}
       >
-        <NewProfile />
+        <Assets />
       </DashboardWrapper>
     </>
   );
 };
 
-export default NewProfilePage;
+export default AssetsPage;

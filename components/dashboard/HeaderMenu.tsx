@@ -2,13 +2,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  Banknote,
+  ChartBarBig,
+  HandHeart,
   Home,
   MessageSquareMore,
-  Package,
   PanelLeft,
   Settings,
-  ShoppingCart,
-  Users2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,8 +27,10 @@ import { AccountDropdown } from "./AccountDropdown";
 
 export default function HeaderMenu({
   breadcrumbItems,
+  selectedMenu,
 }: {
   breadcrumbItems?: BreadcrumbItemType[];
+  selectedMenu?: number;
 }) {
   const t = useTranslations("Dashboard.Menu");
   return (
@@ -57,37 +59,57 @@ export default function HeaderMenu({
             </div>
             <Link
               href="/dashboard"
-              className="flex items-center gap-4 px-3.5 py-2 text-foreground bg-accent rounded-lg"
+              className={`flex items-center gap-4 px-3.5 py-2 rounded-lg ${
+                selectedMenu == 1
+                  ? "bg-accent text-foreground"
+                  : "text-muted-foreground"
+              }`}
             >
               <Home className="h-5 w-5" />
               {t("dashboard")}
             </Link>
             <Link
-              href="#"
-              className="flex items-center gap-4 px-3.5 py-2 text-muted-foreground rounded-lg"
+              href="/dashboard/nisab"
+              className={`flex items-center gap-4 px-3.5 py-2 rounded-lg ${
+                selectedMenu == 2
+                  ? "bg-accent text-foreground"
+                  : "text-muted-foreground"
+              }`}
             >
-              <ShoppingCart className="h-5 w-5" />
-              {t("orders")}
+              <Banknote className="h-5 w-5" />
+              {t("nisab")}
             </Link>
             <Link
-              href="#"
-              className="flex items-center gap-4 px-3.5 py-2 text-muted-foreground rounded-lg"
+              href="/dashboard/assets"
+              className={`flex items-center gap-4 px-3.5 py-2 rounded-lg ${
+                selectedMenu == 3
+                  ? "bg-accent text-foreground"
+                  : "text-muted-foreground"
+              }`}
             >
-              <Package className="h-5 w-5" />
-              {t("products")}
+              <ChartBarBig className="h-5 w-5" />
+              {t("assets")}
             </Link>
             <Link
-              href="#"
-              className="flex items-center gap-4 px-3.5 py-2 text-muted-foreground rounded-lg"
+              href="/dashboard/my-zakat"
+              className={`flex items-center gap-4 px-3.5 py-2 rounded-lg ${
+                selectedMenu == 4
+                  ? "bg-accent text-foreground"
+                  : "text-muted-foreground"
+              }`}
             >
-              <Users2 className="h-5 w-5" />
-              {t("customers")}
+              <HandHeart className="h-5 w-5" />
+              {t("zakat")}
             </Link>
           </nav>
           <nav className="mt-auto flex justify-between gap-3">
             <Link
-              href="#"
-              className="flex items-center gap-4 px-3.5 py-2 text-muted-foreground rounded-lg"
+              href="/dashboard/settings"
+              className={`flex items-center gap-4 px-3.5 py-2 rounded-lg ${
+                selectedMenu == 9
+                  ? "bg-accent text-foreground"
+                  : "text-muted-foreground"
+              }`}
             >
               <Settings className="h-5 w-5" />
               {t("settings")}

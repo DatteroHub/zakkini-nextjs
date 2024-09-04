@@ -1,26 +1,72 @@
 "use client";
+import {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useGetProfiles } from "@/utils/hooks/useGetProfiles";
 
-export default function Step1({ ...props }: React.ComponentProps<any>) {
+export default function Step1({
+  profileName,
+  profilePic,
+  setProfileName,
+  setProfilePic,
+}: {
+  profileName: string;
+  profilePic: number;
+  setProfileName: Dispatch<SetStateAction<string>>;
+  setProfilePic: Dispatch<SetStateAction<number>>;
+}) {
   const t = useTranslations("NewProfile.Step1");
-  const { profileName, profilePic, setProfileName, setProfilePic } = props;
+  const {
+    allProfiles: { data: profiles, isPending },
+  } = useGetProfiles();
+  const [showFieldError, setShowFieldError] = useState(false);
+
+  useEffect(() => {
+    // validate profile name
+    if (profiles && !isPending && profileName.length > 0) {
+      const existingNames = profiles.map((p: any) => p.id);
+      if (existingNames.includes(profileName.toLowerCase())) {
+        setShowFieldError(true);
+        setProfileName("");
+      } else {
+        setShowFieldError(false);
+      }
+    }
+  }, [profiles, isPending, profileName]);
+
   return (
-    <div className="flex flex-col w-full gap-8">
-      <div className="grid w-full items-center gap-4">
-        <Label htmlFor="name">{t("inputTitle")}</Label>
+    <div className="flex flex-col w-full md:w-[450px] gap-4">
+      <div className="grid w-full items-center gap-2">
+        <Label htmlFor="name" className="mb-3">
+          {t("inputTitle")}
+        </Label>
         <Input
+          autoFocus={true}
           type="text"
           id="name"
+          defaultValue={profileName}
           placeholder={t("inputPlaceholder")}
+          className="text-sm md:text-base"
           onChange={(e) => setProfileName(e.target.value)}
         />
+        <div
+          className={`text-sm text-red-400 ${
+            showFieldError ? "visible" : "invisible"
+          }`}
+        >
+          {t("alreadyExists")}
+        </div>
       </div>
       <div className="grid w-full items-center gap-4">
-        <Label>{t("avatarTitle")}</Label>
+        <Label className="mb-1">{t("avatarTitle")}</Label>
         <div className="grid grid-cols-3 gap-4 px-6 lg:px-10 mt-2">
           <Button
             size="icon"
