@@ -1,17 +1,22 @@
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getCurrentProfileId, getProfiles } from "../actions/profile";
+import {
+  getCurrentProfileId,
+  setCurrentProfileId,
+  getProfiles,
+} from "../actions/profile";
 import { UserProlfileType } from "@/lib/zod";
+import { differenceInCalendarDays } from "date-fns";
 
 export const useGetProfiles = () => {
-  const [currentProfileId, setCurrentProfileId] = useState<string | undefined>(
+  const [cookieProfileId, setCookieProfileId] = useState<string | undefined>(
     undefined
   );
 
   useEffect(() => {
     const getProfileId = async () => {
       const id = await getCurrentProfileId();
-      setCurrentProfileId(id);
+      setCookieProfileId(id);
     };
     getProfileId();
   }, []);
@@ -23,18 +28,19 @@ export const useGetProfiles = () => {
 
   const currentProfile: UserProlfileType = useMemo(() => {
     if (allProfiles.data && !allProfiles.isPending) {
-      if (currentProfileId) {
+      if (cookieProfileId) {
         return (
-          allProfiles.data.find((p: any) => p.id === currentProfileId) || null
+          allProfiles.data.find((p: any) => p.id === cookieProfileId) || null
         );
       } else if (allProfiles.data.length > 0) {
         // if not preselected return first one TODO improve multiple
+        setCurrentProfileId(allProfiles.data[0].id);
         return allProfiles.data[0];
       }
     } else {
       return null;
     }
-  }, [allProfiles.data, allProfiles.isPending, currentProfileId]);
+  }, [allProfiles.data, allProfiles.isPending, cookieProfileId]);
 
   const isNoProfiles = useMemo(() => {
     if (allProfiles.data && !allProfiles.isPending) {
@@ -54,11 +60,20 @@ export const useGetProfiles = () => {
 
   const isZDayConfigured = useMemo(() => {
     if (currentProfile) {
-      return currentProfile.hDay && currentProfile.isZakater !== undefined;
+      return currentProfile.zDay && currentProfile.isZakater;
     } else {
       return false;
     }
   }, [currentProfile]);
+
+  const remainingDays = useMemo(() => {
+    if (currentProfile && isZDayConfigured) {
+      return differenceInCalendarDays(
+        new Date(currentProfile.zDay!),
+        new Date()
+      );
+    }
+  }, [currentProfile, isZDayConfigured]);
 
   return {
     allProfiles,
@@ -66,5 +81,6 @@ export const useGetProfiles = () => {
     isNoProfiles,
     isAssetsConfigured,
     isZDayConfigured,
+    remainingDays,
   };
 };

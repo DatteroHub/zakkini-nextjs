@@ -49,6 +49,14 @@
         "appname": "Nisab Today",
         "linkDesc": "For rapid Nisab check you can visit:"
       }
+    },
+    "NisabCard": {
+      "title": "Nisab Today",
+      "lastUpdate": "Updated {time}"
+    },
+    "AssetsCard": {
+      "title": "Total Assets",
+      "lastUpdate": "Updated {time}"
     }
   },
   "NewProfile": {
@@ -81,13 +89,13 @@
       "Country": {
         "title": "Select your country",
         "infoTitle": "What do I enter?",
-        "infoDesc": "Enter the country you live in, the currency of this country will be the reference for the Zakat.",
+        "infoDesc": "Enter the country you live in, the currency of this country will be the reference for Zakat.",
         "select": "Select country...",
         "search": "Filter countries...",
         "searchNotFound": "No results found."
       },
       "Nisab": {
-        "title": "Nisab in {country} today:",
+        "title": "Nisab in {country} today",
         "inGold": "Based on gold",
         "inSilver": "Based on silver",
         "switchGold": "switch to gold",
@@ -113,13 +121,13 @@
       "save": "Save",
       "cancel": "Cancel",
       "infoTitle": "Which country do I enter?",
-      "infoDesc": "Enter the country you live in, the currency of this country will be the reference for the Zakat.",
+      "infoDesc": "Enter the country you live in, the currency of this country will be the reference for Zakat.",
       "select": "Select country...",
       "search": "Filter countries...",
       "searchNotFound": "No results found."
     },
     "Nisab": {
-      "title": "Nisab in {country} today:",
+      "title": "Nisab in {country} today",
       "inGold": "Based on gold",
       "inSilver": "Based on silver",
       "switchGold": "switch to gold",
@@ -147,6 +155,7 @@
     "breadcrumb": "Assets",
     "moneyLabel": "Enter your assets value",
     "totalAssets": "Nisab Today: {currency} {nisab} | Total assets: {currency} {money}",
+    "lastUpdate": "Last Update: {date}",
     "edit": "Edit",
     "save": "Save",
     "cancel": "Cancel",
@@ -163,16 +172,94 @@
     "title": "My Zakat",
     "subtitle": "Manage your Zakat due.",
     "breadcrumb": "Zakat",
-    "infoTitle": "When should I pay the Zakat?",
-    "infoDesc": "You need to figure out your Hawl Day. Please answer the following questions.",
+    "infoTitle": "When should I pay Zakat?",
+    "infoDesc": "You need to figure out your Zakat Day. Please answer the following questions.",
     "Hawl": {
       "q1Label": "Did you pay Zakat last year?",
+      "q2Label": "Do you think it has been a year since you reached Nisab?",
       "yes": "Yes",
-      "no": "no",
-      "inputTitle": "Enter your Hawl Day:",
-      "infoTitle": "What is Hawl Day?",
-      "infoDesc": "Hawl is when your assets exceed the Nisab treshold for one lunar (Hijri) year. You have to identify the day you first exceeded it and calculate one precise Hijri year from that day. ",
-      "hawlDay": "Zakat Day: {day, date, long} | {hijri}"
+      "no": "No",
+      "Yes1": {
+        "labelTitle": "Enter your Zakat Day:",
+        "infoTitle": "What should I enter?",
+        "infoDesc": "Enter the date one lunar year after you paid Zakat last year (i.e. the same day in the Hijri calendar)."
+      },
+      "Yes2": {
+        "labelTitle": "Enter your Zakat Day:",
+        "infoTitle": "What should I enter?",
+        "infoDesc": "If you know the exact day you reached Nisab, enter the date of one lunar year after it (in Hijri calendar), otherwise enter an approximate one. If in doubt consider today as your Zakat Day."
+      },
+      "No2": {
+        "labelTitle": "Enter your Zakat Day:",
+        "infoTitle": "What should I enter?",
+        "infoDesc": "If you know the exact day you reached Nisab, enter the date of one lunar year after it (in Hijri calendar), otherwise enter an approximate one. If in doubt consider one lunar year from today."
+      },
+      "zDay": "Zakat Day: {hijri} ({day, date, long})",
+      "zDayNB": "This will be the Zakat Day also for the next years.",
+      "save": "Save",
+      "Success": {
+        "title": "Zakat Day updated successfully!"
+      },
+      "Error": {
+        "title": "Oops!",
+        "desc": "An error occurred while updating your Zakat Day, please try again.",
+        "cta": "Ok"
+      }
+    },
+    "ZDayCard": {
+      "title": "Zakat Day",
+      "edit": "Edit",
+      "remaining": "days remaining",
+      "ago": "days ago",
+      "today": "Today",
+      "gregorian": "{day, date, medium}",
+      "comeBack": "Shortly to go: come back at Zakat Day to calculate your Zakat due.",
+      "shouldPay": "Attention: It's time to pay Zakat!"
+    },
+    "ZDueCard": {
+      "title": "Zakat Due",
+      "UpdateAssets": {
+        "actionReq": "Action required",
+        "title": "Update assets",
+        "update": "Update your assets to calculate the amount of Zakat due.",
+        "lastUpdate": "Last update: {date}.",
+        "cta": "Go to Assets"
+      },
+      "Payment": {
+        "title": "Zakat amount",
+        "zakatPaid": "Zakat paid",
+        "paid": "Paid",
+        "remaining": "Remaining",
+        "ctaPaidSub": "I paid in part",
+        "ctaPaidFull": "I paid in full",
+        "DialogSub": {
+          "title": "Partial payment",
+          "desc": "Save your partial payment.",
+          "label": "Insert the amount you paid",
+          "cta": "Save"
+        },
+        "DialogFull": {
+          "title": "Zakat payment",
+          "body": "Do you confirm that you have paid the total amount of Zakat?",
+          "label": "Zakat amount: {currency} {total}",
+          "cta": "Confirm"
+        }
+      },
+      "Success": {
+        "title": "Zakat payment saved successfully!"
+      },
+      "Error": {
+        "title": "Oops!",
+        "desc": "An error occurred while saving Zakat payment, please try again.",
+        "cta": "Ok"
+      }
+    },
+    "History": {
+      "title": "Zakat History",
+      "head1": "Date",
+      "head2": "Assets",
+      "head3": "Zakat",
+      "gregorian": "{day, date, medium}"
     }
   },
   "ProfileStatus": {
@@ -192,9 +279,11 @@
       "nisabLabel": "Nisab",
       "assetsLabel": "Assets",
       "zakatPrevisionLabel": "Zakat forecast",
+      "zakatDueLabel": "Zakat due",
       "tooltip": "value: ",
       "nisabWins": "Your assets are under the Nisab treshold",
-      "assetsWins": "Your assets exceeded the Nisab treshold"
+      "assetsWins": "Your assets exceeded the Nisab treshold",
+      "lastUpdate": "Last assets update: {date}"
     }
   }
 }

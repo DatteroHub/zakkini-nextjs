@@ -14,31 +14,40 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { TrendingDown, TrendingUp } from "lucide-react";
+import { Info, TrendingDown, TrendingUp } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { formatDateDistance } from "@/utils/localization/helpers";
+import { useGetProfiles } from "@/utils/hooks/useGetProfiles";
 
 export const NisabAssetsChart = ({
   nisab,
   assets,
+  lastUpdate,
 }: {
   nisab: number;
   assets: number;
+  lastUpdate: number;
 }) => {
   const t = useTranslations("Charts.NisabZakat");
+  const { currentProfile, remainingDays } = useGetProfiles();
 
   const chartData = [
     { status: "nisab", value: nisab, fill: "var(--color-nisab)" },
     { status: "assets", value: assets, fill: "var(--color-assets)" },
-    ...assets >= nisab ? [{
-      status: "zakat",
-      value: (assets / 40).toFixed(2),
-      fill: "var(--color-zakat)",
-    }]:[],
+    ...(assets >= nisab
+      ? [
+          {
+            status: "zakat",
+            value: (assets / 40).toFixed(2),
+            fill: "var(--color-zakat)",
+          },
+        ]
+      : []),
   ];
   const chartConfig = {
     value: {
-        label: t("tooltip"),
-      },
+      label: t("tooltip"),
+    },
     nisab: {
       label: t("nisabLabel"),
       color: "hsl(var(--chart-4))",
@@ -48,7 +57,14 @@ export const NisabAssetsChart = ({
       color: "hsl(var(--chart-2))",
     },
     zakat: {
-      label: t("zakatPrevisionLabel"),
+      label:
+        currentProfile &&
+        currentProfile.zDay &&
+        remainingDays != undefined &&
+        remainingDays < 1 &&
+        lastUpdate > currentProfile.zDay
+          ? t("zakatDueLabel")
+          : t("zakatPrevisionLabel"),
       color: "hsl(var(--chart-3))",
     },
   } satisfies ChartConfig;
@@ -80,27 +96,30 @@ export const NisabAssetsChart = ({
               }
             />
             <XAxis dataKey="value" type="number" hide />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent  />}
-            />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Bar dataKey="value" layout="vertical" radius={5} />
           </BarChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none text-muted-foreground">
+        <div className="grid gap-2 font-medium leading-none text-muted-foreground">
           {nisab > assets ? (
-            <>
-              {t("nisabWins")}
+            <div className="flex gap-2">
               <TrendingDown className="h-4 w-4" />
-            </>
+              {t("nisabWins")}
+            </div>
           ) : (
-            <>
-              {t("assetsWins")}
+            <div className="flex gap-2">
               <TrendingUp className="h-4 w-4" />
-            </>
+              {t("assetsWins")}
+            </div>
           )}
+          <div className="flex gap-2">
+            <Info className="h-4 w-4" />
+            {t("lastUpdate", {
+              date: formatDateDistance(lastUpdate),
+            })}
+          </div>
         </div>
       </CardFooter>
     </Card>

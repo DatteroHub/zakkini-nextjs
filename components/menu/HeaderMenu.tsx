@@ -19,10 +19,10 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { BreadcrumbResponsive } from "./Breadcrumb";
 import { BreadcrumbItemType } from "@/lib/types";
-import { SwitchLang } from "./SwitchLang";
 import { useTranslations } from "next-intl";
+import { SwitchLang } from "./SwitchLang";
+import { BreadcrumbResponsive } from "./Breadcrumb";
 import { AccountDropdown } from "./AccountDropdown";
 
 export default function HeaderMenu({

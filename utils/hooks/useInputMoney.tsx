@@ -86,5 +86,5 @@ export const useInputMoney = ({
     ),
     [label, currency, randomId, value]
   );
-  return { value, InputMoney };
+  return { value, setValue, InputMoney };
 };

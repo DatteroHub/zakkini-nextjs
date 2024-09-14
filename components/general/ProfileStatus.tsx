@@ -7,15 +7,21 @@ import { useTranslations } from "next-intl";
 export const ProfileStatus = ({
   isZakater,
   imgId,
+  noMotion,
 }: {
   isZakater: boolean;
   imgId: number;
+  noMotion?: boolean;
 }) => {
   const t = useTranslations("ProfileStatus");
   return (
     <>
       {isZakater ? (
-        <div className="flex w-full items-center gap-4 -mb-2 p-4 rounded-lg bg-white border-2 border-primary shadow-sm">
+        <div
+          className={`flex w-full items-center gap-4 -mb-2 p-4 rounded-lg bg-white ${
+            noMotion ? "border border-gray-200" : "border-2 border-primary"
+          } shadow-sm`}
+        >
           <div className="relative border-4 border-primary rounded-full">
             <Image
               src={`/avatar_${imgId}.png`}
@@ -24,7 +30,11 @@ export const ProfileStatus = ({
               height="52"
               className="w-16 h-16"
             />
-            <div className="absolute -top-2 -right-2 rounded-full bg-primary p-2 animate-bounce">
+            <div
+              className={`absolute -top-2 -right-2 rounded-full bg-primary p-2 ${
+                !noMotion ? "animate-bounce" : ""
+              }`}
+            >
               <Crown className="h-4 w-4" color="#fff" />
             </div>
           </div>

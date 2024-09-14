@@ -12,6 +12,7 @@ import { userProfileSchema, UserProlfileType } from "@/lib/zod";
 import { auth } from "@/auth";
 import { ComboboxItemType } from "@/lib/types";
 import { cookies } from "next/headers";
+const moment = require("moment-hijri");
 
 export const addProfile = async (
   name: string,
@@ -35,9 +36,13 @@ export const addProfile = async (
           currencyCode: country?.currencyCode,
         },
         metal: isGold ? "gold" : "silver",
+        zakatPaid: 0,
       };
-      userProfileSchema.safeParse(data).success &&
-        (await setDoc(profileRef, data));
+      if (userProfileSchema.safeParse(data).success) {
+        await setDoc(profileRef, data);
+      } else {
+        throw new Error("Validation failed");
+      }
     }
   } catch (err: any) {
     return err;
@@ -64,19 +69,70 @@ export const updateProfile = async (type: string, newData: any) => {
             country: newData.country,
             metal: newData.metal,
             isZakater: newData.isZakater,
+            ...(!newData.isZakater
+              ? {
+                  zDay: null,
+                }
+              : {}),
           };
           break;
         case "assets":
           data = {
             assets: {
               totalAssets: newData.totalAssets,
+              lastUpdate: Date.now(),
             },
             isZakater: newData.isZakater,
+            ...(!newData.isZakater
+              ? {
+                  zDay: null,
+                }
+              : {}),
+          };
+          break;
+        case "zakatDay":
+          data = {
+            zDay: newData.zDay,
+            zakatPaid: 0,
+          };
+          break;
+        case "zakat":
+          const newAmount = newData.zakatPaid;
+          const oldAmount = existingProfile.data().zakatPaid;
+          const zakatDue = parseFloat(
+            (existingProfile.data().assets.totalAssets / 40).toFixed(2)
+          );
+          const totalAmount = newAmount + oldAmount;
+          const isZakatFull = totalAmount >= zakatDue;
+          data = {
+            zakatPaid: isZakatFull ? 0 : totalAmount,
+            ...(isZakatFull
+              ? {
+                  zDay: Number(
+                    moment(existingProfile.data().zDay)
+                      .add(1, "iYear")
+                      .format("x")
+                  ),
+                  history: [
+                    {
+                      currencySymbol:
+                        existingProfile.data().country.currencySymbol,
+                      assets: existingProfile.data().assets,
+                      zakatAmount: zakatDue,
+                      date: existingProfile.data().zDay,
+                    },
+                    ...(existingProfile.data().history || []),
+                  ],
+                }
+              : {}),
           };
           break;
       }
-      userProfileSchema.safeParse(data).success &&
-        (await updateDoc(profileRef, data));
+      if (userProfileSchema.safeParse(data).success) {
+        await updateDoc(profileRef, data);
+      } else {
+        throw new Error("Validation failed");
+      }
     }
   } catch (err: any) {
     return err;

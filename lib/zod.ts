@@ -30,6 +30,14 @@ export const zakkiniUserScherma = z.object({
 });
 export type ZakkiniUserType = z.infer<typeof zakkiniUserScherma>;
 
+const assetsSchema = z
+  .object({
+    totalAssets: z.number().optional(),
+    lastUpdate: z.number().optional(),
+    data: z.array(z.number()).optional(),
+  })
+  .optional();
+  
 export const userProfileSchema = z.object({
   name: z.string().optional(),
   imgId: z.number().optional(),
@@ -41,13 +49,19 @@ export const userProfileSchema = z.object({
     })
     .optional(),
   metal: z.enum(["gold", "silver"]).optional(),
-  assets: z
-    .object({
-      totalAssets: z.number().optional(),
-      data: z.array(z.number()).optional(),
-    })
-    .optional(),
-  hDay: z.string().optional(),
+  assets: assetsSchema,
+  zDay: z.number().optional().nullable(),
   isZakater: z.boolean().optional(),
+  zakatPaid: z.number().optional(),
+  history: z
+    .array(
+      z.object({
+        currencySymbol: z.string().optional(),
+        assets: assetsSchema,
+        zakatAmount: z.number().optional(),
+        date: z.number().optional(),
+      })
+    )
+    .optional(),
 });
 export type UserProlfileType = z.infer<typeof userProfileSchema>;

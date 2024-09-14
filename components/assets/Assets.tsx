@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useGetProfiles } from "@/utils/hooks/useGetProfiles";
 import { useInputMoney } from "@/utils/hooks/useInputMoney";
 import {
+  formatDateDistance,
   formatMoneyToString,
   formatMoneyToStringWithDigits,
   formatStringToMoney,
@@ -84,37 +85,46 @@ export const Assets = () => {
         <AnimateIn
           from="opacity-0 translate-y-2"
           to="opacity-100 translate-y-0"
-          className="flex flex-col h-full"
+          className="flex flex-col h-full gap-4"
         >
-          <div className="flex justify-end">
-            {isEditing ? (
-              <>
-                <Button
-                  variant="link"
-                  className="text-foreground"
-                  onClick={() => setIsEditing(false)}
-                >
-                  {t("cancel")}
-                </Button>
-                <Button
-                  variant="outline"
-                  disabled={isPending ? true : false}
-                  onClick={() => {
-                    myNisabToday && mutate();
-                  }}
-                >
-                  {isPending && (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  {t("save")}
-                </Button>
-              </>
-            ) : (
-              <Button variant="outline" onClick={() => setIsEditing(true)}>
-                <SquarePen className="mr-2 h-4 w-4" />
-                {t("edit")}
-              </Button>
+          <div className="flex justify-between items-center">
+            {currentProfile.assets?.lastUpdate && (
+              <Label className="text-muted-foreground">
+                {t("lastUpdate", {
+                  date: formatDateDistance(currentProfile.assets?.lastUpdate),
+                })}
+              </Label>
             )}
+            <div className="flex justify-end">
+              {isEditing ? (
+                <>
+                  <Button
+                    variant="link"
+                    className="text-foreground"
+                    onClick={() => setIsEditing(false)}
+                  >
+                    {t("cancel")}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    disabled={isPending ? true : false}
+                    onClick={() => {
+                      myNisabToday && mutate();
+                    }}
+                  >
+                    {isPending && (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    )}
+                    {t("save")}
+                  </Button>
+                </>
+              ) : (
+                <Button variant="outline" onClick={() => setIsEditing(true)}>
+                  <SquarePen className="mr-2 h-4 w-4" />
+                  {t("edit")}
+                </Button>
+              )}
+            </div>
           </div>
           <div className="grid w-full items-center gap-4">{InputMoney1}</div>
           <Label className="flex justify-center text-center text-muted-foreground mt-auto">

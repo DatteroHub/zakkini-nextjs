@@ -56,6 +56,7 @@ export const ProfileNotComplete = () => {
                     <NisabAssetsChart
                       nisab={myNisabToday}
                       assets={currentProfile.assets?.totalAssets!}
+                      lastUpdate={currentProfile.assets?.lastUpdate!}
                     />
                   </>
                 ) : (
@@ -67,6 +68,7 @@ export const ProfileNotComplete = () => {
                     <NisabAssetsChart
                       nisab={myNisabToday}
                       assets={currentProfile.assets?.totalAssets!}
+                      lastUpdate={currentProfile.assets?.lastUpdate!}
                     />
                   </>
                 )}

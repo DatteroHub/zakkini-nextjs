@@ -1,6 +1,6 @@
 "use client";
-import SidebarMenu from "./SidebarMenu";
-import HeaderMenu from "./HeaderMenu";
+import HeaderMenu from "../menu/HeaderMenu";
+import SidebarMenu from "../menu/SidebarMenu";
 import { BreadcrumbItemType } from "@/lib/types";
 
 type Props = {

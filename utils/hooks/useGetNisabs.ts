@@ -37,6 +37,7 @@ export const useGetNisabs = ({
 
   // Single Nisab
   const [myNisabToday, setMyNisabToday] = useState<number | null>(null);
+  const [myNisabTodayTimestamp, setMyNisabTodayTimestamp] = useState<number | null>(null);
   const { currentProfile } = useGetProfiles();
   const { data, isSuccess } = useQuery({
     queryKey: ["get_single_nisab"],
@@ -48,8 +49,9 @@ export const useGetNisabs = ({
     if (data && isSuccess && currentProfile) {
       const isGold = currentProfile.metal == "gold";
       setMyNisabToday(isGold ? data.nisab?.gold : data.nisab?.silver);
+      setMyNisabTodayTimestamp(data.timestamp);
     }
   }, [data, isSuccess, currentProfile]);
 
-  return { nisabData, myNisabToday, countryList };
+  return { nisabData, myNisabToday, myNisabTodayTimestamp, countryList };
 };
