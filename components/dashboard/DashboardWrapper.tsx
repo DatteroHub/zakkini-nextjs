@@ -2,6 +2,7 @@
 import HeaderMenu from "../menu/HeaderMenu";
 import SidebarMenu from "../menu/SidebarMenu";
 import { BreadcrumbItemType } from "@/lib/types";
+import { ProfilesModal } from "../general/ProfilesModal";
 
 type Props = {
   children: React.ReactNode;
@@ -36,6 +37,7 @@ export default function DashboardWrapper({
           {children}
         </main>
       </div>
+      <ProfilesModal />
     </div>
   );
 }

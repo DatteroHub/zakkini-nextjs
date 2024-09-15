@@ -24,6 +24,7 @@ import { useTranslations } from "next-intl";
 import { SwitchLang } from "./SwitchLang";
 import { BreadcrumbResponsive } from "./Breadcrumb";
 import { AccountDropdown } from "./AccountDropdown";
+import { ProfileButton } from "./ProfileButton";
 
 export default function HeaderMenu({
   breadcrumbItems,
@@ -57,6 +58,7 @@ export default function HeaderMenu({
                 {t("appname")}
               </div>
             </div>
+            <ProfileButton />
             <Link
               href="/dashboard"
               className={`flex items-center gap-4 px-3.5 py-2 rounded-lg ${

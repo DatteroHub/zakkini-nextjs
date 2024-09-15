@@ -20,6 +20,7 @@ import {
 import { Button } from "../ui/button";
 import { SwitchLang } from "./SwitchLang";
 import { useTranslations } from "next-intl";
+import { ProfileButton } from "./ProfileButton";
 
 export default function SidebarMenu({
   selectedMenu,
@@ -44,6 +45,7 @@ export default function SidebarMenu({
             </div>
           </a>
         </div>
+        <ProfileButton />
         <Link
           href="/dashboard"
           className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:text-foreground ${

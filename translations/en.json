@@ -25,6 +25,17 @@
         "title": "Breadcrumb",
         "subtitle": "Select a page to navigate to.",
         "cta": "Close"
+      },
+      "ProfileModal":{
+        "title": "Your profiles",
+        "title2": "Select a profile",
+        "zakater": "Zakater",
+        "nonZakater": "Non Zakater",
+        "daysLeft": "days left",
+        "daysAgo": "days ago",
+        "today": "Today",
+        "incomplete": "Profile incomplete",
+        "cta": "Close"
       }
     },
     "Empty": {
@@ -209,7 +220,7 @@
     "ZDayCard": {
       "title": "Zakat Day",
       "edit": "Edit",
-      "remaining": "days remaining",
+      "remaining": "days left",
       "ago": "days ago",
       "today": "Today",
       "gregorian": "{day, date, medium}",

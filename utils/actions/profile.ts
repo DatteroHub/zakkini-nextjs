@@ -11,7 +11,6 @@ import { db, USERS_COLLECTION, PROFILES_COLLECTION } from "@/lib/firebase";
 import { userProfileSchema, UserProlfileType } from "@/lib/zod";
 import { auth } from "@/auth";
 import { ComboboxItemType } from "@/lib/types";
-import { cookies } from "next/headers";
 const moment = require("moment-hijri");
 
 export const addProfile = async (
@@ -49,16 +48,19 @@ export const addProfile = async (
   }
 };
 
-export const updateProfile = async (type: string, newData: any) => {
+export const updateProfile = async (
+  profileId: string,
+  type: string,
+  newData: any
+) => {
   const session = await auth();
-  const profileId = await getCurrentProfileId();
   try {
     const profileRef = doc(
       db,
       USERS_COLLECTION,
       session?.user?.email!,
       PROFILES_COLLECTION,
-      profileId!
+      profileId
     );
     const existingProfile = await getDoc(profileRef);
     if (existingProfile.exists()) {
@@ -158,13 +160,3 @@ export const getProfiles = async () => {
     return err;
   }
 };
-
-const COOKIE_NAME = "CURRENT_PROFILE_ID";
-
-export async function getCurrentProfileId() {
-  return cookies().get(COOKIE_NAME)?.value;
-}
-
-export async function setCurrentProfileId(id: string) {
-  cookies().set(COOKIE_NAME, id);
-}

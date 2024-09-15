@@ -25,7 +25,7 @@ export const ProfileStatus = ({
           <div className="relative border-4 border-primary rounded-full">
             <Image
               src={`/avatar_${imgId}.png`}
-              alt="zakkini icon"
+              alt="profile icon"
               width="52"
               height="52"
               className="w-16 h-16"
@@ -52,7 +52,7 @@ export const ProfileStatus = ({
           <div className="border-2 border-gray-400 rounded-full">
             <Image
               src={`/avatar_${imgId}.png`}
-              alt="zakkini icon"
+              alt="profile icon"
               width="52"
               height="52"
               className="w-16 h-16 opacity-50"

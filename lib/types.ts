@@ -7,3 +7,8 @@ export type ComboboxItemType = {
   label: string;
   currencyCode?: string;
 };
+export type ProfileInfo = {
+  id: string;
+  name: string;
+  imgId: string;
+}

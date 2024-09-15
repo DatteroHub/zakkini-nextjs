@@ -52,6 +52,7 @@ export default function Step1({
           autoFocus={true}
           type="text"
           id="name"
+          maxLength={16}
           defaultValue={profileName}
           placeholder={t("inputPlaceholder")}
           className="text-sm md:text-base"

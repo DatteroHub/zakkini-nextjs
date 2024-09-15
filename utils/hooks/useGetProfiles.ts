@@ -1,22 +1,26 @@
 import { useEffect, useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import {
-  getCurrentProfileId,
-  setCurrentProfileId,
-  getProfiles,
-} from "../actions/profile";
+import { getProfiles } from "../actions/profile";
 import { UserProlfileType } from "@/lib/zod";
 import { differenceInCalendarDays } from "date-fns";
+import { ProfileInfo } from "@/lib/types";
+import { useProfile } from "./useProfile";
+import { useModal } from "@/components/context/ModalContext";
+import { getProfileIdCookie } from "../helpers/cookie";
 
 export const useGetProfiles = () => {
-  const [cookieProfileId, setCookieProfileId] = useState<string | undefined>(
-    undefined
-  );
+  const pathname = usePathname();
+  const { profileInfo, setCurrentProfile } = useProfile();
+  const { openModal, enablePreventClose } = useModal();
+  const [currentProfileIdCookie, setCurrentProfileIdCookie] = useState<
+    string | undefined
+  >(undefined);
 
   useEffect(() => {
     const getProfileId = async () => {
-      const id = await getCurrentProfileId();
-      setCookieProfileId(id);
+      const id = await getProfileIdCookie();
+      setCurrentProfileIdCookie(id);
     };
     getProfileId();
   }, []);
@@ -27,20 +31,45 @@ export const useGetProfiles = () => {
   });
 
   const currentProfile: UserProlfileType = useMemo(() => {
-    if (allProfiles.data && !allProfiles.isPending) {
-      if (cookieProfileId) {
-        return (
-          allProfiles.data.find((p: any) => p.id === cookieProfileId) || null
-        );
-      } else if (allProfiles.data.length > 0) {
-        // if not preselected return first one TODO improve multiple
-        setCurrentProfileId(allProfiles.data[0].id);
-        return allProfiles.data[0];
+    if (
+      allProfiles.data &&
+      !allProfiles.isPending &&
+      allProfiles.data.length > 0
+    ) {
+      const currentProfileId = profileInfo?.id;
+      if (currentProfileId) {
+        const selectedProfile =
+          allProfiles.data.find((p: any) => p.id === currentProfileId) || null;
+        return selectedProfile;
+      } else if (currentProfileIdCookie != undefined) {
+        const selectedProfile =
+          allProfiles.data.find((p: any) => p.id === currentProfileIdCookie) ||
+          null;
+        if (selectedProfile) {
+          const profile: ProfileInfo = {
+            id: selectedProfile.id,
+            name: selectedProfile.name,
+            imgId: selectedProfile.imgId,
+          };
+          setCurrentProfile(profile);
+        }
+        return selectedProfile;
+      } else {
+        if (pathname !== "/dashboard/new-profile") {
+          enablePreventClose();
+          openModal();
+        }
+        return null;
       }
     } else {
       return null;
     }
-  }, [allProfiles.data, allProfiles.isPending, cookieProfileId]);
+  }, [
+    allProfiles.data,
+    allProfiles.isPending,
+    profileInfo,
+    currentProfileIdCookie,
+  ]);
 
   const isNoProfiles = useMemo(() => {
     if (allProfiles.data && !allProfiles.isPending) {

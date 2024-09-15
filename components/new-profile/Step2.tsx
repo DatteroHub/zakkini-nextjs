@@ -78,10 +78,10 @@ export default function Step2({
                 {country?.value}{" "}
                 {isGold
                   ? formatMoneyToString(
-                      nisabData.nisab[country?.currencyCode!].gold
+                      nisabData.nisab[country?.currencyCode!]?.gold
                     )
                   : formatMoneyToString(
-                      nisabData.nisab[country?.currencyCode!].silver
+                      nisabData.nisab[country?.currencyCode!]?.silver
                     )}
               </div>
               <div className="grid gap-2">
