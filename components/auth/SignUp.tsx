@@ -71,7 +71,7 @@ export default function SignUp() {
                 </AlertTitle>
               </Alert>
               <label className="text-sm">
-                We've sent a verification link to your email. Please verify your
+                We&#39;ve sent a verification link to your email. Please verify your
                 email to log in.
               </label>
               <div className="flex items-center gap-8 mt-12">
@@ -79,7 +79,7 @@ export default function SignUp() {
                   <div className="text-sm">Email resent. Check your inbox.</div>
                 ) : (
                   <div className="text-sm">
-                    <div>Didn't receive any email?</div>
+                    <div>Didn&#39;t receive any email?</div>
                     <button
                       className={`underline mt-1.5 ${
                         counter > 0
