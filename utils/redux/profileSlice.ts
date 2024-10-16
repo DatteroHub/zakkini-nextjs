@@ -21,7 +21,6 @@ export const profileSlice = createSlice({
     setProfile: (state, action: PayloadAction<ProfileInfo>) => {
       state.profileInfo = action.payload;
     },
-    // Azione per resettare il profilo (TODO logout)
     clearProfile: (state) => {
       state.profileInfo = null;
     },

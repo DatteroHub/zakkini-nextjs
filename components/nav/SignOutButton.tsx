@@ -1,8 +1,10 @@
 import { auth, signOut } from "@/auth";
 import { Button } from "../ui/button";
+//import { useProfile } from "@/utils/hooks/useProfile";
 
 const SignOutButton = async () => {
   const session = await auth();
+  //const { clearCurrentProfile } = useProfile();
   return (
     <>
       <div>Ciao {session?.user?.name ?? session?.user?.email}</div>
@@ -10,6 +12,7 @@ const SignOutButton = async () => {
         <form
           action={async () => {
             "use server";
+            //clearCurrentProfile();
             await signOut({ redirectTo: "/" });
           }}
         >

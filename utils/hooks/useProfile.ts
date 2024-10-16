@@ -1,7 +1,7 @@
 import { ProfileInfo } from "@/lib/types";
-import { setProfile } from "../redux/profileSlice";
+import { setProfile, clearProfile } from "../redux/profileSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/redux";
-import { setProfileIdCookie } from "../helpers/cookie";
+import { setProfileIdCookie, removeProfileIdCookie } from "../helpers/cookie";
 
 export const useProfile = () => {
   const dispatch = useAppDispatch();
@@ -12,5 +12,10 @@ export const useProfile = () => {
     setProfileIdCookie(p.id);
   };
 
-  return { profileInfo, setCurrentProfile };
+  const clearCurrentProfile = () => {
+    dispatch(clearProfile());
+    removeProfileIdCookie();
+  };
+
+  return { profileInfo, setCurrentProfile, clearCurrentProfile };
 };

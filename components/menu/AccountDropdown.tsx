@@ -12,10 +12,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "../ui/skeleton";
+import { useProfile } from "@/utils/hooks/useProfile";
 
 export const AccountDropdown = () => {
   const { data: session } = useSession();
   const t = useTranslations("Dashboard.Menu.Account");
+  const { clearCurrentProfile } = useProfile();
 
   return (
     <DropdownMenu>
@@ -48,7 +50,10 @@ export const AccountDropdown = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           style={{ cursor: "pointer" }}
-          onClick={() => signOut({ callbackUrl: "/" })}
+          onClick={() => {
+            clearCurrentProfile();
+            signOut({ callbackUrl: "/" });
+          }}
         >
           {t("logout")}
         </DropdownMenuItem>

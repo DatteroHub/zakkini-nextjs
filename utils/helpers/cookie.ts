@@ -8,3 +8,6 @@ export async function getProfileIdCookie() {
 export async function setProfileIdCookie(id: string) {
   cookies().set(PROFILE_ID_COOKIE_NAME, id);
 }
+export async function removeProfileIdCookie() {
+  cookies().delete(PROFILE_ID_COOKIE_NAME);
+}

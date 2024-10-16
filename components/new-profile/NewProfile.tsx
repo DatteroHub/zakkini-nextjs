@@ -12,6 +12,7 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Success } from "./Success";
 import { useProfile } from "@/utils/hooks/useProfile";
+import { formatProfileId } from "@/utils/helpers/profile";
 
 export default function NewProfile() {
   const t = useTranslations("NewProfile");
@@ -35,7 +36,7 @@ export default function NewProfile() {
     if (isSuccess) {
       setCurrentStep((prev) => prev + 1);
       const profile: ProfileInfo = {
-        id: profileName.toLowerCase(),
+        id: formatProfileId(profileName),
         name: profileName,
         imgId: profilePic.toString(),
       };

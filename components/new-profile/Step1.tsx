@@ -11,6 +11,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useGetProfiles } from "@/utils/hooks/useGetProfiles";
+import { formatProfileId } from "@/utils/helpers/profile";
 
 export default function Step1({
   profileName,
@@ -33,7 +34,7 @@ export default function Step1({
     // validate profile name
     if (profiles && !isPending && profileName.length > 0) {
       const existingNames = profiles.map((p: any) => p.id);
-      if (existingNames.includes(profileName.toLowerCase())) {
+      if (existingNames.includes(formatProfileId(profileName))) {
         setShowFieldError(true);
         setProfileName("");
       } else {

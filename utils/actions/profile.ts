@@ -11,6 +11,7 @@ import { db, USERS_COLLECTION, PROFILES_COLLECTION } from "@/lib/firebase";
 import { userProfileSchema, UserProlfileType } from "@/lib/zod";
 import { auth } from "@/auth";
 import { ComboboxItemType } from "@/lib/types";
+import { formatProfileId } from "../helpers/profile";
 const moment = require("moment-hijri");
 
 export const addProfile = async (
@@ -22,7 +23,7 @@ export const addProfile = async (
   const session = await auth();
   try {
     const userRef = doc(db, USERS_COLLECTION, session?.user?.email!);
-    const profileRef = doc(userRef, PROFILES_COLLECTION, name.toLowerCase());
+    const profileRef = doc(userRef, PROFILES_COLLECTION, formatProfileId(name));
     const existingUser = await getDoc(userRef);
     const existingProfile = await getDoc(profileRef);
     if (existingUser.exists() && !existingProfile.exists()) {
